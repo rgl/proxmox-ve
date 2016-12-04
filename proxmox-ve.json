@@ -1,0 +1,75 @@
+{
+  "variables": {
+    "disk_size": "15375"
+  },
+  "builders": [
+    {
+      "name": "proxmox-ve-amd64-virtualbox",
+      "type": "virtualbox-iso",
+      "guest_os_type": "Debian_64",
+      "guest_additions_mode": "attach",
+      "headless": true,
+      "vboxmanage": [
+        ["modifyvm", "{{.Name}}", "--memory", "2048"],
+        ["modifyvm", "{{.Name}}", "--cpus", "2"],
+        ["modifyvm", "{{.Name}}", "--vram", "16"],
+        ["modifyvm", "{{.Name}}", "--audio", "none"],
+        ["modifyvm", "{{.Name}}", "--nictype1", "82540EM"],
+        ["modifyvm", "{{.Name}}", "--nictype2", "82540EM"],
+        ["modifyvm", "{{.Name}}", "--nictype3", "82540EM"],
+        ["modifyvm", "{{.Name}}", "--nictype4", "82540EM"]
+      ],
+      "vboxmanage_post": [
+        ["storagectl", "{{.Name}}", "--name", "IDE Controller", "--remove"]
+      ],
+      "disk_size": "{{user `disk_size`}}",
+      "hard_drive_interface": "sata",
+      "iso_url": "https://www.proxmox.com/en/downloads?task=callelement&format=raw&item_id=229&element=f85c494b-2b32-4109-b8c1-083cca2b7db6&method=download&args[0]=0eafe5def7757920890f4f6c213ed081",
+      "iso_checksum": "fc40797ef103b63ca5156f009ee1fb6ea605bb9dfe2b0c443211c9c210cb54c9",
+      "iso_checksum_type": "sha256",
+      "ssh_username": "root",
+      "ssh_password": "vagrant",
+      "ssh_wait_timeout": "60m",
+      "boot_wait": "5s",
+      "boot_command": [
+        "<enter>",
+        "<wait10><wait10><wait10>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "United States<wait><enter><wait><tab><wait>",
+        "<tab><wait>",
+        "<tab><wait>",
+        "<enter><wait5>",
+        "vagrant<tab><wait>",
+        "vagrant<tab><wait>",
+        "pve@example.com<tab><wait>",
+        "<enter><wait5>",
+        "pve.example.com<tab><wait>",
+        "<tab><wait>",
+        "<tab><wait>",
+        "<tab><wait>",
+        "<tab><wait>",
+        "<enter><wait5>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<enter>"
+      ],
+      "shutdown_command": "poweroff"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "scripts": [
+        "upgrade.sh",
+        "provision.sh"
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "output": "{{.BuildName}}.box"
+    }
+  ]
+}
