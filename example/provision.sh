@@ -55,7 +55,7 @@ killall agetty # force them to re-display the issue file.
 # disable the "You do not have a valid subscription for this server. Please visit www.proxmox.com to get a list of available options."
 # message that appears each time you logon the web-ui.
 # NB this file is restored when you (re)install the pve-manager package.
-echo 'PVE.Utils.checked_command = function(o) { o(); };' >>/usr/share/pve-manager/ext6/pvemanagerlib.js
+echo 'PVE.Utils.checked_command = function(o) { o(); };' >>/usr/share/pve-manager/js/pvemanagerlib.js
 
 # install vim.
 apt-get install -y --no-install-recommends vim
