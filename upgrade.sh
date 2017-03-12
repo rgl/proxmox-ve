@@ -31,5 +31,23 @@ auto vmbr0
 iface vmbr0 inet manual
 EOF
 
+# set the keyboard layout.
+apt-get install -y console-data
+cat >/etc/default/keyboard <<'EOF'
+# KEYBOARD CONFIGURATION FILE
+# Consult the keyboard(5) manual page.
+XKBMODEL="pc105"
+XKBLAYOUT="pt"
+XKBVARIANT=""
+XKBOPTIONS=""
+KEYMAP="pt-latin1"
+BACKSPACE="guess"
+EOF
+dpkg-reconfigure keyboard-configuration
+
+# set the timezone.
+echo 'Europe/Lisbon' >/etc/timezone
+dpkg-reconfigure tzdata
+
 # reboot.
 nohup bash -c "ps -eo pid,comm | awk '/sshd/{print \$1}' | xargs kill; sync; reboot"
