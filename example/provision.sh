@@ -50,7 +50,7 @@ cat >>/etc/issue <<EOF
 EOF
 ifup vmbr0
 iptables-save # show current rules.
-killall agetty # force them to re-display the issue file.
+killall agetty | true # force them to re-display the issue file.
 
 # disable the "You do not have a valid subscription for this server. Please visit www.proxmox.com to get a list of available options."
 # message that appears each time you logon the web-ui.

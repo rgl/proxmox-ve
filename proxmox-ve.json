@@ -7,6 +7,51 @@
   },
   "builders": [
     {
+      "name": "proxmox-ve-amd64-libvirt",
+      "type": "qemu",
+      "accelerator": "kvm",
+      "qemuargs": [
+        ["-m", "2048"],
+        ["-smp", "2"]
+      ],
+      "headless": true,
+      "http_directory": ".",
+      "format": "qcow2",
+      "disk_size": "{{user `disk_size`}}",
+      "disk_interface": "virtio",
+      "iso_url": "{{user `iso_url`}}",
+      "iso_checksum": "{{user `iso_checksum`}}",
+      "iso_checksum_type": "{{user `iso_checksum_type`}}",
+      "ssh_username": "root",
+      "ssh_password": "vagrant",
+      "ssh_wait_timeout": "60m",
+      "boot_wait": "5s",
+      "boot_command": [
+        "<enter>",
+        "<wait10><wait10><wait10>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "United States<wait><enter><wait><tab><wait>",
+        "<tab><wait>",
+        "<tab><wait>",
+        "<enter><wait5>",
+        "vagrant<tab><wait>",
+        "vagrant<tab><wait>",
+        "pve@example.com<tab><wait>",
+        "<enter><wait5>",
+        "pve.example.com<tab><wait>",
+        "<tab><wait>",
+        "<tab><wait>",
+        "<tab><wait>",
+        "<tab><wait>",
+        "<enter><wait5>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<enter>"
+      ],
+      "shutdown_command": "poweroff"
+    },
+    {
       "name": "proxmox-ve-amd64-virtualbox",
       "type": "virtualbox-iso",
       "guest_os_type": "Debian_64",
@@ -72,7 +117,8 @@
   "post-processors": [
     {
       "type": "vagrant",
-      "output": "{{.BuildName}}.box"
+      "output": "{{.BuildName}}.box",
+      "vagrantfile_template": "Vagrantfile.template"
     }
   ]
 }

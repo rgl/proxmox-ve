@@ -14,7 +14,7 @@ After you create the Base Box you can start an [example](example/) environment w
 
 ```bash
 cd example
-vagrant up
+vagrant up --provider=libvirt # or --provider=virtualbox
 ```
 
 And access the [Proxmox Web Interface]([https://10.10.10.2:8006/) with the default `root` user and password `vagrant`.
