@@ -4,8 +4,6 @@ Currently this targets Proxmox VE 4.4.
 
 # Usage
 
-Install [PhantomJS](http://phantomjs.org/) and have it available on your `PATH`.
-
 Type `make` and follow the instructions.
 
 If you want to troubleshoot the packer execution do a `export PACKER_LOG=1` before running `make`.
