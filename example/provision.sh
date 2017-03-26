@@ -180,6 +180,7 @@ EOF
     pct exec $pve_id -- cat /etc/alpine-release
     pct exec $pve_id -- passwd -d root                          # remove the root password.
     pct exec $pve_id -- sh -c "echo 'root:vagrant' | chpasswd"  # or change it to vagrant.
+    pct exec $pve_id -- ip addr
     pct exec $pve_id -- route -n
     pct exec $pve_id -- ping $ip -c 2
     pct status $pve_id

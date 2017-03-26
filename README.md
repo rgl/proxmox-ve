@@ -46,6 +46,7 @@ corresponding answers.
 | advance to the next page          | `<enter><wait5>`                                      |
 | wait 1m for install to finish     | `<wait10><wait10><wait10><wait10><wait10><wait10>`    |
 | wait 1m for install to finish     | `<wait10><wait10><wait10><wait10><wait10><wait10>`    |
+| wait 1m for install to finish     | `<wait10><wait10><wait10><wait10><wait10><wait10>`    |
 | reboot                            | `<enter>`                                             |
 
 **NB** Do not change the keyboard layout. If you do, the email address will fail to be typed.

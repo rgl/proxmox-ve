@@ -7,7 +7,7 @@ export DEBIAN_FRONTEND=noninteractive
 # switch to the non-enterprise repository.
 # see https://pve.proxmox.com/wiki/Package_Repositories
 rm -f /etc/apt/sources.list.d/pve-enterprise.list
-echo 'deb http://download.proxmox.com/debian jessie pve-no-subscription' >/etc/apt/sources.list.d/pve-no-subscription.list
+echo 'deb http://download.proxmox.com/debian stretch pvetest' >/etc/apt/sources.list.d/pvetest.list
 
 # switch the apt mirror from us to nl.
 sed -i -E 's,ftp\.us\.debian,ftp.nl.debian,' /etc/apt/sources.list
@@ -15,6 +15,11 @@ sed -i -E 's,ftp\.us\.debian,ftp.nl.debian,' /etc/apt/sources.list
 # upgrade.
 apt-get update
 apt-get dist-upgrade -y
+
+# use traditional interface names like eth0 instead of enp0s3
+# by disabling the predictable network interface names.
+sed -i -E 's,^(GRUB_CMDLINE_LINUX=).+,\1"net.ifnames=0",' /etc/default/grub
+update-grub
 
 # configure the network for working in a vagrant environment.
 # NB proxmox has created the vmbr0 bridge and placed eth0 on the it, but
