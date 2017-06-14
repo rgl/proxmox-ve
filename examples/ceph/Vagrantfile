@@ -3,7 +3,9 @@ net = "10.12.13."
 
 Vagrant.configure('2') do |config|
   config.vm.box = 'proxmox-ve-amd64'
-
+  if Vagrant.has_plugin?("vagrant-hostmanager")
+    config.hostmanager.enabled = false
+  end
   config.vm.provider :libvirt do |lv|
     lv.memory = 4096
     lv.cpus = 2
@@ -11,18 +13,17 @@ Vagrant.configure('2') do |config|
     lv.nested = true
   end
 
-  config.vm.define "node1" do |n|
+  config.vm.define "pve" do |pve|
     node1_ip = net + "21"
-    n.vm.hostname = "node1"
 
-    n.vm.provider :libvirt do |lv|
+    pve.vm.provider :libvirt do |lv|
       lv.storage :file, :size => '50G'
       lv.storage :file, :size => '50G'
       lv.storage :file, :size => '50G'
     end
 
-    n.vm.network "private_network", ip: node1_ip, auto_config: false
-    n.vm.provision "shell", path: "provision.sh", args: node1_ip
-    n.vm.provision "shell", path: "ceph.bash", args: [net,node1_ip]
+    pve.vm.network "private_network", ip: node1_ip, auto_config: false
+    pve.vm.provision "shell", path: "provision.sh", args: node1_ip
+    pve.vm.provision "shell", path: "ceph.bash", args: [net,node1_ip]
   end
 end
