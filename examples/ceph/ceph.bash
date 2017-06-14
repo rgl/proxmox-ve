@@ -24,8 +24,8 @@ cat <<EOF >>/etc/pve/storage.cfg
 
 rbd: rbd
         monhost ${ip}
-        content images
-        krbd 0
+        content rootdir,images
+        krbd 1
         pool rbd
         username admin
 EOF
