@@ -14,5 +14,7 @@ Vagrant.configure('2') do |config|
   end
   ip = '10.10.10.2'
   config.vm.network :private_network, ip: ip, auto_config: false
-  config.vm.provision :shell, path: 'provision.sh', args: [ip]
+  config.vm.provision :shell, path: 'provision.sh', args: ip
+  config.vm.provision :shell, path: 'provision-containers.sh', args: ip
+  config.vm.provision :shell, path: 'summary.sh', args: ip
 end
