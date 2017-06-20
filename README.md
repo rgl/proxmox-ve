@@ -17,6 +17,8 @@ vagrant up --provider=libvirt # or --provider=virtualbox
 
 And access the [Proxmox Web Interface]([https://10.10.10.2:8006/) with the default `root` user and password `vagrant`.
 
+For a cluster example see [rgl/proxmox-ve-cluster-vagrant](https://github.com/rgl/proxmox-ve-cluster-vagrant).
+
 # Packer boot_command
 
 As Proxmox does not have any way to be pre-seeded, this environment has to answer all the
