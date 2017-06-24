@@ -19,7 +19,7 @@ for pve_id in 100 101; do
     pvesm status # show status.
     mkfs.ext4 $(pvesm path local-lvm:vm-$pve_id-disk-1)
     pct create $pve_id \
-        /var/lib/vz/template/cache/$pve_template \
+        local:vztmpl/$pve_template \
         -onboot 1 \
         -ostype alpine \
         -hostname alpine-$pve_id \
