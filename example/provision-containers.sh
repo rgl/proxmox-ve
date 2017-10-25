@@ -10,7 +10,7 @@ pveam update
 pveam available # show templates.
 
 # create and start two alpine-linux containers.
-pve_template=alpine-3.4-default_20161206_amd64.tar.xz
+pve_template=alpine-3.5-default_20170504_amd64.tar.xz
 pveam download local $pve_template
 for pve_id in 100 101; do
     pve_ip=$(echo $ip | sed -E "s,\.[0-9]+\$,.$pve_id,")
@@ -32,6 +32,7 @@ for pve_id in 100 101; do
     pct start $pve_id
     pct exec $pve_id sh <<EOF
 set -eu
+apk update
 apk add nginx
 adduser -D -u 1000 -g www www
 mkdir /www
