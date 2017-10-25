@@ -1,8 +1,8 @@
 {
   "variables": {
     "disk_size": "15375",
-    "iso_url": "http://download.proxmox.com/iso/proxmox-ve_5.0-5ab26bc-5.iso",
-    "iso_checksum": "58006a1cf84fd8708bf5eaf34265ac45dc856b4608bcf13f2bc2a0679d288667",
+    "iso_url": "http://download.proxmox.com/iso/proxmox-ve_5.1-722cc488-1.iso",
+    "iso_checksum": "e279547f07402cae615834cc7ea1cebd1ec05028e892e93c2327d0bc049fc914",
     "iso_checksum_type": "sha256"
   },
   "builders": [
