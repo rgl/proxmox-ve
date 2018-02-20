@@ -1,8 +1,8 @@
 {
   "variables": {
     "disk_size": "15375",
-    "iso_url": "http://download.proxmox.com/iso/proxmox-ve_5.1-722cc488-1.iso",
-    "iso_checksum": "e279547f07402cae615834cc7ea1cebd1ec05028e892e93c2327d0bc049fc914",
+    "iso_url": "http://download.proxmox.com/iso/proxmox-ve_5.1-3.iso",
+    "iso_checksum": "acddd24bd7941bc696cbfd23af4801427b1e6a5b4ece284c3a73ab5a103dd448",
     "iso_checksum_type": "sha256"
   },
   "builders": [
@@ -83,6 +83,7 @@
       "boot_command": [
         "<enter>",
         "<wait10><wait10><wait10>",
+        "<enter><wait>",
         "<enter><wait>",
         "<enter><wait>",
         "United States<wait><enter><wait><tab><wait>",

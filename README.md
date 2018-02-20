@@ -30,8 +30,9 @@ corresponding answers.
 |----------------------------------:|-------------------------------------------------------|
 | select "Intall Proxmox VE"        | `<enter>`                                             |
 | wait for boot                     | `<wait10><wait10><wait10>`                            |
-| agree license                     | `<enter><wait5>`                                      |
-| target disk                       | `<enter><wait5>`                                      |
+| OK for no KVM virt on VirtualBox  | `<enter><wait>`                                       |
+| agree license                     | `<enter><wait>`                                       |
+| target disk                       | `<enter><wait>`                                       |
 | type country                      | `United States<wait><enter><wait><tab><wait>`         |
 | timezone                          | `<tab><wait>`                                         |
 | keyboard layout                   | `<tab><wait>`                                         |
