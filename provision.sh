@@ -8,7 +8,9 @@ set -x
 export DEBIAN_FRONTEND=noninteractive
 
 # remove old kernel packages.
-pve_kernels=$(dpkg-query -f '${Package}\n' -W 'pve-kernel-*')
+# NB as of pve 5.2, there's a metapackage, pve-kernel-4.15, then there are the
+#    real kernels at pve-kernel-*-pve (these are the ones that are removed).
+pve_kernels=$(dpkg-query -f '${Package}\n' -W 'pve-kernel-*-pve')
 for pve_kernel in $pve_kernels; do
     if [[ $pve_kernel != "pve-kernel-$(uname -r)" ]]; then
         apt-get remove -y --purge $pve_kernel
