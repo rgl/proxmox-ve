@@ -110,7 +110,10 @@ lvm version
 kvm --version
 lxc-ls --version
 cat /etc/os-release
+cat /etc/debian_version
+cat /etc/machine-id
 pveversion -v
+lsblk -x KNAME -o KNAME,SIZE,TRAN,SUBSYSTEMS,FSTYPE,UUID,LABEL,MODEL,SERIAL
 
 # show the proxmox web address.
 cat <<EOF
