@@ -67,6 +67,11 @@ apt-get install -y rsync
 # is kinda slow and does not normally work when running inside VB.
 echo UseDNS no >>/etc/ssh/sshd_config
 
+# make sure the ssh connections are properly closed when the system is shutdown.
+# NB this is needed for vagrant reload and vagrant-reload plugin.
+# NB this also needs UsePAM yes in sshd_config (which is already there).
+apt-get install -y libpam-systemd
+
 # disable the graphical terminal. its kinda slow and useless on a VM.
 sed -i -E 's,#(GRUB_TERMINAL\s*=).*,\1console,g' /etc/default/grub
 update-grub
