@@ -1,8 +1,8 @@
 {
   "variables": {
     "disk_size": "15375",
-    "iso_url": "http://download.proxmox.com/iso/proxmox-ve_5.3-2.iso",
-    "iso_checksum": "235f70f59c13b85ecf5466fd8607b687f2f78ce104b74b0301b9b1d8e6ca6b87",
+    "iso_url": "http://download.proxmox.com/iso/proxmox-ve_5.4-1.iso",
+    "iso_checksum": "6f02cb34d2c8effa49e86a07d27e668dc125dfb1b37ed09ebc26002bf9daf75e",
     "iso_checksum_type": "sha256"
   },
   "builders": [
@@ -35,16 +35,20 @@
         "United States<wait><enter><wait><tab><wait>",
         "<tab><wait>",
         "<tab><wait>",
+        "<tab><wait>",
         "<enter><wait5>",
         "vagrant<tab><wait>",
         "vagrant<tab><wait>",
         "pve@example.com<tab><wait>",
+        "<tab><wait>",
         "<enter><wait5>",
         "pve.example.com<tab><wait>",
         "<tab><wait>",
         "<tab><wait>",
         "<tab><wait>",
         "<tab><wait>",
+        "<tab><wait>",
+        "<enter><wait5>",
         "<enter><wait5>",
         "<wait10><wait10><wait10><wait10><wait10><wait10>",
         "<wait10><wait10><wait10><wait10><wait10><wait10>",

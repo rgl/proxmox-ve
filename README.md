@@ -36,17 +36,21 @@ corresponding answers.
 | type country                      | `United States<wait><enter><wait><tab><wait>`         |
 | timezone                          | `<tab><wait>`                                         |
 | keyboard layout                   | `<tab><wait>`                                         |
+| advance to the next button        | `<tab><wait>`                                         |
 | advance to the next page          | `<enter><wait5>`                                      |
 | password                          | `vagrant<tab><wait>`                                  |
 | confirm password                  | `vagrant<tab><wait>`                                  |
 | email                             | `pve@example.com<tab><wait>`                          |
+| advance to the next button        | `<tab><wait>`                                         |
 | advance to the next page          | `<enter><wait5>`                                      |
 | hostname                          | `pve.example.com<tab><wait>`                          |
 | ip address                        | `<tab><wait>`                                         |
 | netmask                           | `<tab><wait>`                                         |
 | gateway                           | `<tab><wait>`                                         |
 | DNS server                        | `<tab><wait>`                                         |
+| advance to the next button        | `<tab><wait>`                                         |
 | advance to the next page          | `<enter><wait5>`                                      |
+| install                           | `<enter><wait5>`                                      |
 | wait 1m for install to finish     | `<wait10><wait10><wait10><wait10><wait10><wait10>`    |
 | wait 1m for install to finish     | `<wait10><wait10><wait10><wait10><wait10><wait10>`    |
 | wait 1m for install to finish     | `<wait10><wait10><wait10><wait10><wait10><wait10>`    |
