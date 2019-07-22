@@ -67,6 +67,7 @@
         ["modifyvm", "{{.Name}}", "--memory", "2048"],
         ["modifyvm", "{{.Name}}", "--cpus", "2"],
         ["modifyvm", "{{.Name}}", "--vram", "16"],
+        ["modifyvm", "{{.Name}}", "--graphicscontroller", "vmsvga"],
         ["modifyvm", "{{.Name}}", "--audio", "none"],
         ["modifyvm", "{{.Name}}", "--nictype1", "82540EM"],
         ["modifyvm", "{{.Name}}", "--nictype2", "82540EM"],
