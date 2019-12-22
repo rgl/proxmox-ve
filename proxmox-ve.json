@@ -1,8 +1,8 @@
 {
   "variables": {
     "disk_size": "15375",
-    "iso_url": "http://download.proxmox.com/iso/proxmox-ve_6.0-1.iso",
-    "iso_checksum": "e39315b1fc5c27ab76cbdb69a138507c19dacf1ca46cde02bea48e17791d1d50",
+    "iso_url": "http://download.proxmox.com/iso/proxmox-ve_6.1-1.iso",
+    "iso_checksum": "95434b81cf74fdb5f8ac3e341c55293e10dafd1a75d1be45668ccb25f7d3c93c",
     "iso_checksum_type": "sha256"
   },
   "builders": [
@@ -29,7 +29,7 @@
       "boot_wait": "5s",
       "boot_command": [
         "<enter>",
-        "<wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10>",
         "<enter><wait>",
         "<enter><wait>",
         "United S<wait>t<wait>a<wait>t<wait>e<wait>s<wait><enter><wait><tab><wait>",
@@ -50,6 +50,7 @@
         "<tab><wait>",
         "<enter><wait5>",
         "<enter><wait5>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
         "<wait10><wait10><wait10><wait10><wait10><wait10>",
         "<wait10><wait10><wait10><wait10><wait10><wait10>",
         "<wait10><wait10><wait10><wait10><wait10><wait10>",
@@ -89,7 +90,7 @@
       "boot_wait": "5s",
       "boot_command": [
         "<enter>",
-        "<wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10>",
         "<enter><wait>",
         "<enter><wait>",
         "<enter><wait>",
@@ -111,6 +112,7 @@
         "<tab><wait>",
         "<enter><wait5>",
         "<enter><wait5>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
         "<wait10><wait10><wait10><wait10><wait10><wait10>",
         "<wait10><wait10><wait10><wait10><wait10><wait10>",
         "<wait10><wait10><wait10><wait10><wait10><wait10>",

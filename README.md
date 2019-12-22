@@ -1,6 +1,6 @@
 This builds an up-to-date [Proxmox VE](https://www.proxmox.com/en/proxmox-ve) Vagrant Base Box.
 
-Currently this targets Proxmox VE 6.
+Currently this targets Proxmox VE 6.1.
 
 # Usage
 
@@ -29,7 +29,7 @@ corresponding answers.
 | step                              | boot_command                                          |
 |----------------------------------:|-------------------------------------------------------|
 | select "Intall Proxmox VE"        | `<enter>`                                             |
-| wait for boot                     | `<wait10><wait10><wait10>`                            |
+| wait for boot                     | `<wait10><wait10><wait10><wait10>`                    |
 | OK for no KVM virt on VirtualBox  | `<enter><wait>`                                       |
 | agree license                     | `<enter><wait>`                                       |
 | target disk                       | `<enter><wait>`                                       |
@@ -51,6 +51,7 @@ corresponding answers.
 | advance to the next button        | `<tab><wait>`                                         |
 | advance to the next page          | `<enter><wait5>`                                      |
 | install                           | `<enter><wait5>`                                      |
+| wait 1m for install to finish     | `<wait10><wait10><wait10><wait10><wait10><wait10>`    |
 | wait 1m for install to finish     | `<wait10><wait10><wait10><wait10><wait10><wait10>`    |
 | wait 1m for install to finish     | `<wait10><wait10><wait10><wait10><wait10><wait10>`    |
 | wait 1m for install to finish     | `<wait10><wait10><wait10><wait10><wait10><wait10>`    |
