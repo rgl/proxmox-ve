@@ -1,8 +1,8 @@
 {
   "variables": {
     "disk_size": "15375",
-    "iso_url": "http://download.proxmox.com/iso/proxmox-ve_6.1-2.iso",
-    "iso_checksum": "f5eba59abdc942844bbf698c82336238491eae39c5b2d5786313980a6ef6a59c",
+    "iso_url": "http://download.proxmox.com/iso/proxmox-ve_6.2-1.iso",
+    "iso_checksum": "d8fb3cfba19d38aa0c05452a954150f96e3ee455a36d52427aa26e6906fb8bff",
     "iso_checksum_type": "sha256"
   },
   "builders": [
@@ -10,9 +10,10 @@
       "name": "proxmox-ve-amd64-libvirt",
       "type": "qemu",
       "accelerator": "kvm",
+      "cpus": 2,
+      "memory": 2048,
       "qemuargs": [
-        ["-m", "2048"],
-        ["-smp", "2"]
+        ["-cpu", "host"]
       ],
       "headless": true,
       "http_directory": ".",
@@ -25,7 +26,7 @@
       "iso_checksum_type": "{{user `iso_checksum_type`}}",
       "ssh_username": "root",
       "ssh_password": "vagrant",
-      "ssh_wait_timeout": "60m",
+      "ssh_timeout": "60m",
       "boot_wait": "5s",
       "boot_command": [
         "<enter>",
@@ -86,7 +87,7 @@
       "iso_checksum_type": "{{user `iso_checksum_type`}}",
       "ssh_username": "root",
       "ssh_password": "vagrant",
-      "ssh_wait_timeout": "60m",
+      "ssh_timeout": "60m",
       "boot_wait": "5s",
       "boot_command": [
         "<enter>",

@@ -10,7 +10,7 @@ pveam update
 pveam available # show templates.
 
 # create and start two alpine-linux containers.
-pve_template=alpine-3.10-default_20190626_amd64.tar.xz
+pve_template=alpine-3.11-default_20200425_amd64.tar.xz
 pveam download local $pve_template
 for pve_id in 100 101; do
     pve_ip=$(echo $ip | sed -E "s,\.[0-9]+\$,.$pve_id,")

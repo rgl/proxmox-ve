@@ -1,12 +1,12 @@
 This builds an up-to-date [Proxmox VE](https://www.proxmox.com/en/proxmox-ve) Vagrant Base Box.
 
-Currently this targets Proxmox VE 6.1.
+Currently this targets Proxmox VE 6.2.
 
 # Usage
 
 Type `make` and follow the instructions.
 
-If you want to troubleshoot the packer execution do a `export PACKER_LOG=1` before running `make`.
+If you want to troubleshoot the packer execution see the `.log` file that is created in the current directory.
 
 After you create the Base Box you can start an [example](example/) environment with:
 
