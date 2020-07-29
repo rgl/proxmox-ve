@@ -2,8 +2,7 @@
   "variables": {
     "disk_size": "15375",
     "iso_url": "http://download.proxmox.com/iso/proxmox-ve_6.2-1.iso",
-    "iso_checksum": "d8fb3cfba19d38aa0c05452a954150f96e3ee455a36d52427aa26e6906fb8bff",
-    "iso_checksum_type": "sha256"
+    "iso_checksum": "sha256:d8fb3cfba19d38aa0c05452a954150f96e3ee455a36d52427aa26e6906fb8bff"
   },
   "builders": [
     {
@@ -23,7 +22,6 @@
       "disk_discard": "unmap",
       "iso_url": "{{user `iso_url`}}",
       "iso_checksum": "{{user `iso_checksum`}}",
-      "iso_checksum_type": "{{user `iso_checksum_type`}}",
       "ssh_username": "root",
       "ssh_password": "vagrant",
       "ssh_timeout": "60m",
@@ -84,7 +82,6 @@
       "hard_drive_discard": true,
       "iso_url": "{{user `iso_url`}}",
       "iso_checksum": "{{user `iso_checksum`}}",
-      "iso_checksum_type": "{{user `iso_checksum_type`}}",
       "ssh_username": "root",
       "ssh_password": "vagrant",
       "ssh_timeout": "60m",
