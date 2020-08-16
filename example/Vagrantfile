@@ -12,6 +12,7 @@ Vagrant.configure('2') do |config|
     vb.linked_clone = true
     vb.memory = 2048
     vb.cpus = 4
+    vb.customize ['modifyvm', :id, '--nested-hw-virt', 'on']
   end
   ip = '10.10.10.2'
   config.vm.network :private_network, ip: ip, auto_config: false
