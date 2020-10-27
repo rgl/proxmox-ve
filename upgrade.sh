@@ -1,5 +1,5 @@
 #!/bin/bash
-set -eux
+set -euxo pipefail
 
 # configure apt for non-interactive mode.
 export DEBIAN_FRONTEND=noninteractive

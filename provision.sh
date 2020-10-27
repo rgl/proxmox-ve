@@ -1,8 +1,5 @@
 #!/bin/bash
-# abort this script when a command fails or a unset variable is used.
-set -eu
-# echo all the executed commands.
-set -x
+set -euxo pipefail
 
 # configure apt for non-interactive mode.
 export DEBIAN_FRONTEND=noninteractive
@@ -110,7 +107,14 @@ apt-get -y clean
 #    (somewhat unsafe as it has to fill the entire disk, which might trigger
 #    a disk (near) full alarm; slower; slightly better compression).
 if [ "$(lsblk -no DISC-GRAN $(findmnt -no SOURCE /) | awk '{print $1}')" != '0B' ]; then
-    fstrim -v /
+    while true; do
+        output="$(fstrim -v /)"
+        cat <<<"$output"
+        sync && sync && sleep 15
+        if [ "$output" == '/: 0 B (0 bytes) trimmed' ]; then
+            break
+        fi
+    done
 else
     dd if=/dev/zero of=/EMPTY bs=1M || true && sync && rm -f /EMPTY
 fi

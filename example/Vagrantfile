@@ -1,7 +1,9 @@
+ENV['VAGRANT_EXPERIMENTAL'] = 'typed_triggers'
+
 Vagrant.configure('2') do |config|
   config.vm.box = 'proxmox-ve-amd64'
   config.vm.provider :libvirt do |lv, config|
-    lv.memory = 2048
+    lv.memory = 2*1024
     lv.cpus = 4
     lv.cpu_mode = 'host-passthrough'
     lv.nested = true
@@ -10,9 +12,41 @@ Vagrant.configure('2') do |config|
   end
   config.vm.provider :virtualbox do |vb|
     vb.linked_clone = true
-    vb.memory = 2048
+    vb.memory = 2*1024
     vb.cpus = 4
     vb.customize ['modifyvm', :id, '--nested-hw-virt', 'on']
+  end
+  config.vm.provider :hyperv do |hv, config|
+    hv.vmname = "#{File.basename(File.dirname(File.dirname(__FILE__)))}-example"
+    hv.linked_clone = true
+    hv.enable_virtualization_extensions = true # nested virtualization.
+    hv.memory = 2*1024
+    hv.cpus = 4
+    hv.vlan_id = ENV['HYPERV_VLAN_ID']
+    # set the management network adapter.
+    # see https://github.com/hashicorp/vagrant/issues/7915
+    # see https://github.com/hashicorp/vagrant/blob/10faa599e7c10541f8b7acf2f8a23727d4d44b6e/plugins/providers/hyperv/action/configure.rb#L21-L35
+    config.vm.network :private_network, bridge: ENV['HYPERV_SWITCH_NAME'] if ENV['HYPERV_SWITCH_NAME']
+    config.vm.synced_folder '.', '/vagrant',
+      type: 'smb',
+      smb_username: ENV['VAGRANT_SMB_USERNAME'] || ENV['USER'],
+      smb_password: ENV['VAGRANT_SMB_PASSWORD']
+    # further configure the VM (e.g. add the secondary network adapter for
+    # the :private_network that is defined bellow).
+    config.trigger.before :'VagrantPlugins::HyperV::Action::StartInstance', type: :action do |trigger|
+      trigger.ruby do |env, machine|
+        system(
+          'PowerShell',
+          '-NoLogo',
+          '-NoProfile',
+          '-ExecutionPolicy',
+          'Bypass',
+          '-File',
+          'configure-hyperv.ps1',
+          machine.provider_config.vmname
+        )
+      end
+    end
   end
   ip = '10.10.10.2'
   config.vm.network :private_network, ip: ip, auto_config: false

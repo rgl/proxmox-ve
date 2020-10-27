@@ -4,20 +4,70 @@ Currently this targets Proxmox VE 6.2.
 
 # Usage
 
-Type `make` and follow the instructions.
+Create the base box as described in the section corresponding to your provider.
 
 If you want to troubleshoot the packer execution see the `.log` file that is created in the current directory.
 
-After you create the Base Box you can start an [example](example/) environment with:
+After the example vagrant enviroment is started, you can access the [Proxmox Web Interface](https://10.10.10.2:8006/) with the default `root` user and password `vagrant`.
+
+For a cluster example see [rgl/proxmox-ve-cluster-vagrant](https://github.com/rgl/proxmox-ve-cluster-vagrant).
+
+## libvirt/VirtualBox
+
+Create the base box:
+
+```bash
+make build-libvirt # or build-virtualbox
+```
+
+Start the example vagrant environment with:
 
 ```bash
 cd example
 vagrant up --provider=libvirt # or --provider=virtualbox
 ```
 
-And access the [Proxmox Web Interface]([https://10.10.10.2:8006/) with the default `root` user and password `vagrant`.
+## Hyper-V
 
-For a cluster example see [rgl/proxmox-ve-cluster-vagrant](https://github.com/rgl/proxmox-ve-cluster-vagrant).
+Create a vSwitch for proxmox:
+
+```bash
+PowerShell -NoLogo -NoProfile -ExecutionPolicy Bypass <<'EOF'
+$switchName = 'proxmox'
+$networkAdapterName = "vEthernet ($switchName)"
+$networkAdapterIpAddress = '10.10.10.1'
+$networkAdapterIpPrefixLength = 24
+
+# create the vSwitch.
+New-VMSwitch -Name $switchName -SwitchType Internal | Out-Null
+
+# assign it an host IP address.
+$networkAdapter = Get-NetAdapter $adapterName
+$networkAdapter | New-NetIPAddress `
+    -IPAddress $networkAdapterIpAddress `
+    -PrefixLength $networkAdapterIpPrefixLength `
+    | Out-Null
+
+# remove all virtual switches from the windows firewall.
+Set-NetFirewallProfile `
+    -DisabledInterfaceAliases (
+            Get-NetAdapter -name "vEthernet*" | Where-Object {$_.ifIndex}
+        ).InterfaceAlias
+EOF
+```
+
+Create the base box:
+
+```bash
+make build-hyperv
+```
+
+Start the example vagrant environment with:
+
+```bash
+cd example
+vagrant up --provider=hyperv
+```
 
 # Packer boot_command
 

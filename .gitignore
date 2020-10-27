@@ -2,6 +2,7 @@
 packer_cache/
 output-*/
 shared/
+tmp/
 *.box
 *.log
-.update-iso-metadata-cookie
+secrets*
