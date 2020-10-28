@@ -10,11 +10,11 @@ pveam update
 pveam available # show templates.
 
 # create and start two alpine-linux containers.
-pve_template=alpine-3.11-default_20200425_amd64.tar.xz
+pve_template=alpine-3.12-default_20200823_amd64.tar.xz
 pveam download local $pve_template
 for pve_id in 100 101; do
     pve_ip=$(echo $ip | sed -E "s,\.[0-9]+\$,.$pve_id,")
-    pve_disk_size=128M
+    pve_disk_size=512M
     pvesm alloc local-lvm $pve_id vm-$pve_id-disk-1 $pve_disk_size
     pvesm status # show status.
     mkfs.ext4 $(pvesm path local-lvm:vm-$pve_id-disk-1)
