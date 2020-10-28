@@ -20,14 +20,14 @@ for pve_id in 100 101; do
     mkfs.ext4 $(pvesm path local-lvm:vm-$pve_id-disk-1)
     pct create $pve_id \
         local:vztmpl/$pve_template \
-        -onboot 1 \
-        -ostype alpine \
-        -hostname alpine-$pve_id \
-        -cores 1 \
-        -memory 128 \
-        -swap 0 \
-        -rootfs local-lvm:vm-$pve_id-disk-1,size=$pve_disk_size \
-        -net0 name=eth0,bridge=vmbr0,gw=$ip,ip=$pve_ip/24
+        --onboot 1 \
+        --ostype alpine \
+        --hostname alpine-$pve_id \
+        --cores 1 \
+        --memory 128 \
+        --swap 0 \
+        --rootfs local-lvm:vm-$pve_id-disk-1,size=$pve_disk_size \
+        --net0 name=eth0,bridge=vmbr0,gw=$ip,ip=$pve_ip/24
     pct config $pve_id # show config.
     pct start $pve_id
     pct exec $pve_id sh <<EOF
