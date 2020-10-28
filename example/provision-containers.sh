@@ -20,6 +20,7 @@ for pve_id in 100 101; do
     mkfs.ext4 $(pvesm path local-lvm:vm-$pve_id-disk-1)
     pct create $pve_id \
         local:vztmpl/$pve_template \
+        --unprivileged 0 \
         --onboot 1 \
         --ostype alpine \
         --hostname alpine-$pve_id \
