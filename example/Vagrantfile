@@ -43,7 +43,7 @@ Vagrant.configure('2') do |config|
           'Bypass',
           '-File',
           'configure-hyperv.ps1',
-          machine.provider_config.vmname
+          machine.id
         )
       end
     end
