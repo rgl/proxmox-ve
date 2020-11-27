@@ -1,6 +1,6 @@
 This builds an up-to-date [Proxmox VE](https://www.proxmox.com/en/proxmox-ve) Vagrant Base Box.
 
-Currently this targets Proxmox VE 6.2.
+Currently this targets Proxmox VE 6.3.
 
 # Usage
 
@@ -28,6 +28,8 @@ vagrant up --provider=libvirt # or --provider=virtualbox
 ```
 
 ## Hyper-V
+
+Follow the [rgl/debian-vagrant Hyper-V Usage section](https://github.com/rgl/debian-vagrant#hyper-v-usage).
 
 Create a vSwitch for proxmox:
 
@@ -79,8 +81,7 @@ corresponding answers.
 | step                              | boot_command                                          |
 |----------------------------------:|-------------------------------------------------------|
 | select "Intall Proxmox VE"        | `<enter>`                                             |
-| wait for boot                     | `<wait10><wait10><wait10><wait10>`                    |
-| OK for no KVM virt on VirtualBox  | `<enter><wait>`                                       |
+| wait for boot                     | `<wait1m>`                                            |
 | agree license                     | `<enter><wait>`                                       |
 | target disk                       | `<enter><wait>`                                       |
 | type country                      | `United States<wait><enter><wait><tab><wait>`         |
@@ -101,10 +102,5 @@ corresponding answers.
 | advance to the next button        | `<tab><wait>`                                         |
 | advance to the next page          | `<enter><wait5>`                                      |
 | install                           | `<enter><wait5>`                                      |
-| wait 1m for install to finish     | `<wait10><wait10><wait10><wait10><wait10><wait10>`    |
-| wait 1m for install to finish     | `<wait10><wait10><wait10><wait10><wait10><wait10>`    |
-| wait 1m for install to finish     | `<wait10><wait10><wait10><wait10><wait10><wait10>`    |
-| wait 1m for install to finish     | `<wait10><wait10><wait10><wait10><wait10><wait10>`    |
-| reboot                            | `<enter>`                                             |
 
 **NB** Do not change the keyboard layout. If you do, the email address will fail to be typed.

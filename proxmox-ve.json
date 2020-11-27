@@ -1,8 +1,8 @@
 {
   "variables": {
     "disk_size": "15375",
-    "iso_url": "http://download.proxmox.com/iso/proxmox-ve_6.2-1.iso",
-    "iso_checksum": "sha256:d8fb3cfba19d38aa0c05452a954150f96e3ee455a36d52427aa26e6906fb8bff",
+    "iso_url": "http://download.proxmox.com/iso/proxmox-ve_6.3-1.iso",
+    "iso_checksum": "sha256:5a1becb95ebc48e6eafeb9fa704d1025b8c35dfa1ba28c533dc2ebf15d0a039b",
     "hyperv_switch_name": "{{env `HYPERV_SWITCH_NAME`}}",
     "hyperv_vlan_id": "{{env `HYPERV_VLAN_ID`}}"
   },
@@ -30,7 +30,7 @@
       "boot_wait": "5s",
       "boot_command": [
         "<enter>",
-        "<wait10><wait10><wait10><wait10><wait10>",
+        "<wait1m>",
         "<enter><wait>",
         "<enter><wait>",
         "United S<wait>t<wait>a<wait>t<wait>e<wait>s<wait><enter><wait><tab><wait>",
@@ -50,12 +50,7 @@
         "<tab><wait>",
         "<tab><wait>",
         "<enter><wait5>",
-        "<enter><wait5>",
-        "<wait10><wait10><wait10><wait10><wait10><wait10>",
-        "<wait10><wait10><wait10><wait10><wait10><wait10>",
-        "<wait10><wait10><wait10><wait10><wait10><wait10>",
-        "<wait10><wait10><wait10><wait10><wait10><wait10>",
-        "<enter>"
+        "<enter><wait5>"
       ],
       "shutdown_command": "poweroff"
     },
@@ -68,6 +63,7 @@
       "vboxmanage": [
         ["modifyvm", "{{.Name}}", "--memory", "2048"],
         ["modifyvm", "{{.Name}}", "--cpus", "2"],
+        ["modifyvm", "{{.Name}}", "--nested-hw-virt", "on"],
         ["modifyvm", "{{.Name}}", "--vram", "16"],
         ["modifyvm", "{{.Name}}", "--graphicscontroller", "vmsvga"],
         ["modifyvm", "{{.Name}}", "--audio", "none"],
@@ -90,8 +86,7 @@
       "boot_wait": "5s",
       "boot_command": [
         "<enter>",
-        "<wait10><wait10><wait10><wait10><wait10>",
-        "<enter><wait>",
+        "<wait1m>",
         "<enter><wait>",
         "<enter><wait>",
         "United S<wait>t<wait>a<wait>t<wait>e<wait>s<wait><enter><wait><tab><wait>",
@@ -111,12 +106,7 @@
         "<tab><wait>",
         "<tab><wait>",
         "<enter><wait5>",
-        "<enter><wait5>",
-        "<wait10><wait10><wait10><wait10><wait10><wait10>",
-        "<wait10><wait10><wait10><wait10><wait10><wait10>",
-        "<wait10><wait10><wait10><wait10><wait10><wait10>",
-        "<wait10><wait10><wait10><wait10><wait10><wait10>",
-        "<enter>"
+        "<enter><wait5>"
       ],
       "shutdown_command": "poweroff"
     },
@@ -165,8 +155,6 @@
         "<enter><wait5>",
         "<enter><wait5>",
         "<wait4m>",
-        "<enter>",
-        "<wait1m>",
         "root<enter>",
         "<wait5>",
         "vagrant<enter>",
