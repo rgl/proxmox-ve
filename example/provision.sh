@@ -7,6 +7,20 @@ fqdn=$(hostname --fqdn)
 # configure apt for non-interactive mode.
 export DEBIAN_FRONTEND=noninteractive
 
+# make sure the local apt cache is up to date.
+while true; do
+    apt-get update && break || sleep 5
+done
+
+# extend the main partition to the end of the disk
+# and extend the pve/data logical volume to use all
+# the free space.
+apt-get install -y cloud-guest-utils
+if growpart /dev/[vs]da 3; then
+    pvresize /dev/[vs]da3
+    lvextend --extents +100%FREE /dev/pve/data
+fi
+
 # configure the network for NATting.
 ifdown vmbr0
 cat >/etc/network/interfaces <<EOF

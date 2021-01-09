@@ -8,6 +8,7 @@ Vagrant.configure('2') do |config|
     lv.cpu_mode = 'host-passthrough'
     lv.nested = true
     lv.keymap = 'pt'
+    lv.machine_virtual_size = 30
     config.vm.synced_folder '.', '/vagrant', type: 'nfs'
   end
   config.vm.provider :virtualbox do |vb|
