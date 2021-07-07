@@ -1,6 +1,6 @@
 This builds an up-to-date [Proxmox VE](https://www.proxmox.com/en/proxmox-ve) Vagrant Base Box.
 
-Currently this targets Proxmox VE 6.4.
+Currently this targets Proxmox VE 7.0.
 
 # Usage
 
@@ -24,7 +24,7 @@ Start the example vagrant environment with:
 
 ```bash
 cd example
-vagrant up --provider=libvirt # or --provider=virtualbox
+vagrant up --no-destroy-on-error --provider=libvirt # or --provider=virtualbox
 ```
 
 ## Hyper-V

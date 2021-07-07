@@ -111,7 +111,8 @@ if [ "$(lsblk -no DISC-GRAN $(findmnt -no SOURCE /) | awk '{print $1}')" != '0B'
         output="$(fstrim -v /)"
         cat <<<"$output"
         sync && sync && sleep 15
-        if [ "$output" == '/: 0 B (0 bytes) trimmed' ]; then
+        bytes_trimmed="$(echo "$output" | perl -n -e '/\((\d+) bytes\)/ && print $1')"
+        if (( bytes_trimmed < $((4*1024*1024)) )); then # < 4 MiB is good enough.
             break
         fi
     done

@@ -63,6 +63,7 @@ cat >>/etc/issue <<EOF
 
 EOF
 ifup vmbr0
+ifup eth1
 iptables-save # show current rules.
 killall agetty | true # force them to re-display the issue file.
 
