@@ -21,6 +21,9 @@ lxc-ls --version
 cat /etc/os-release
 pveversion -v
 
+# show the free space.
+df -h /
+
 # show the proxmox web address.
 cat <<EOF
 access the proxmox web interface at:

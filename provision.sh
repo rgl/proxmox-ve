@@ -102,6 +102,9 @@ rm -f /var/lib/systemd/random-seed
 apt-get -y autoremove
 apt-get -y clean
 
+# show the free space.
+df -h /
+
 # zero the free disk space -- for better compression of the box file.
 # NB prefer discard/trim (safer; faster) over creating a big zero filled file
 #    (somewhat unsafe as it has to fill the entire disk, which might trigger
@@ -112,6 +115,8 @@ if [ "$(lsblk -no DISC-GRAN $(findmnt -no SOURCE /) | awk '{print $1}')" != '0B'
         cat <<<"$output"
         sync && sync && sleep 15
         bytes_trimmed="$(echo "$output" | perl -n -e '/\((\d+) bytes\)/ && print $1')"
+        # NB if this never reaches zero, it might be because there is not
+        #    enough free space for completing the trim.
         if (( bytes_trimmed < $((4*1024*1024)) )); then # < 4 MiB is good enough.
             break
         fi
