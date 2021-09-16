@@ -2,6 +2,7 @@ ENV['VAGRANT_EXPERIMENTAL'] = 'typed_triggers'
 
 Vagrant.configure('2') do |config|
   config.vm.box = 'proxmox-ve-amd64'
+  #config.vm.box = 'proxmox-ve-uefi-amd64'
   config.vm.provider :libvirt do |lv, config|
     lv.memory = 2*1024
     lv.cpus = 4

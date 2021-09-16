@@ -55,6 +55,54 @@
       "shutdown_command": "poweroff"
     },
     {
+      "name": "proxmox-ve-uefi-amd64-libvirt",
+      "type": "qemu",
+      "accelerator": "kvm",
+      "cpus": 2,
+      "memory": 2048,
+      "qemuargs": [
+        ["-bios", "/usr/share/ovmf/OVMF.fd"],
+        ["-cpu", "host"]
+      ],
+      "headless": true,
+      "http_directory": ".",
+      "format": "qcow2",
+      "disk_size": "{{user `disk_size`}}",
+      "disk_interface": "virtio-scsi",
+      "disk_discard": "unmap",
+      "iso_url": "{{user `iso_url`}}",
+      "iso_checksum": "{{user `iso_checksum`}}",
+      "ssh_username": "root",
+      "ssh_password": "vagrant",
+      "ssh_timeout": "60m",
+      "boot_wait": "5s",
+      "boot_command": [
+        "<enter>",
+        "<wait1m>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "United S<wait>t<wait>a<wait>t<wait>e<wait>s<wait><enter><wait><tab><wait>",
+        "<tab><wait>",
+        "<tab><wait>",
+        "<tab><wait>",
+        "<enter><wait5>",
+        "vagrant<tab><wait>",
+        "vagrant<tab><wait>",
+        "pve@example.com<tab><wait>",
+        "<tab><wait>",
+        "<enter><wait5>",
+        "pve.example.com<tab><wait>",
+        "<tab><wait>",
+        "<tab><wait>",
+        "<tab><wait>",
+        "<tab><wait>",
+        "<tab><wait>",
+        "<enter><wait5>",
+        "<enter><wait5>"
+      ],
+      "shutdown_command": "poweroff"
+    },
+    {
       "name": "proxmox-ve-amd64-virtualbox",
       "type": "virtualbox-iso",
       "guest_os_type": "Debian_64",
@@ -181,7 +229,20 @@
     {
       "type": "vagrant",
       "output": "{{.BuildName}}.box",
-      "vagrantfile_template": "Vagrantfile.template"
+      "vagrantfile_template": "Vagrantfile.template",
+      "only": [
+        "proxmox-ve-amd64-libvirt",
+        "proxmox-ve-amd64-virtualbox",
+        "proxmox-ve-amd64-hyperv"
+      ]
+    },
+    {
+      "type": "vagrant",
+      "output": "{{.BuildName}}.box",
+      "vagrantfile_template": "Vagrantfile-uefi.template",
+      "only": [
+        "proxmox-ve-uefi-amd64-libvirt"
+      ]
     }
   ]
 }
