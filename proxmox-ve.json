@@ -1,8 +1,8 @@
 {
   "variables": {
     "disk_size": "20480",
-    "iso_url": "http://download.proxmox.com/iso/proxmox-ve_7.0-2.iso",
-    "iso_checksum": "sha256:4720c04c16ea4c93248e0a3b5e74586ce9177db752253e39079ae424a2c92157",
+    "iso_url": "http://download.proxmox.com/iso/proxmox-ve_7.1-1.iso",
+    "iso_checksum": "sha256:40e4351863c556bcb5b187f18caad175327e8b32655c5c2ac89111f7fd943163",
     "hyperv_switch_name": "{{env `HYPERV_SWITCH_NAME`}}",
     "hyperv_vlan_id": "{{env `HYPERV_VLAN_ID`}}"
   },
