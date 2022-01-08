@@ -44,7 +44,7 @@ $networkAdapterIpPrefixLength = 24
 New-VMSwitch -Name $switchName -SwitchType Internal | Out-Null
 
 # assign it an host IP address.
-$networkAdapter = Get-NetAdapter $adapterName
+$networkAdapter = Get-NetAdapter $networkAdapterName
 $networkAdapter | New-NetIPAddress `
     -IPAddress $networkAdapterIpAddress `
     -PrefixLength $networkAdapterIpPrefixLength `
