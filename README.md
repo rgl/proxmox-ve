@@ -20,6 +20,12 @@ Create the base box:
 make build-libvirt # or build-virtualbox
 ```
 
+Add the base box as suggested in make output:
+
+```bash
+vagrant box add -f proxmox-ve-amd64 proxmox-ve-amd64-libvirt.box # or proxmox-ve-amd64-virtualbox.box
+```
+
 Start the example vagrant environment with:
 
 ```bash
@@ -62,6 +68,12 @@ Create the base box:
 
 ```bash
 make build-hyperv
+```
+
+Add the base box as suggested in make output:
+
+```bash
+vagrant box add -f proxmox-ve-amd64 proxmox-ve-amd64-hyperv.box
 ```
 
 Start the example vagrant environment with:
