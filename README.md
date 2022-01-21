@@ -80,7 +80,7 @@ corresponding answers.
 
 | step                              | boot_command                                          |
 |----------------------------------:|-------------------------------------------------------|
-| select "Intall Proxmox VE"        | `<enter>`                                             |
+| select "Install Proxmox VE"       | `<enter>`                                             |
 | wait for boot                     | `<wait1m>`                                            |
 | agree license                     | `<enter><wait>`                                       |
 | target disk                       | `<enter><wait>`                                       |
