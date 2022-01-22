@@ -114,6 +114,40 @@ PACKER_OUTPUT_BASE_DIR=/dev/shm make build-libvirt
 
 Remember to also define `PACKER_OUTPUT_BASE_DIR` when you run `make clean` afterwards.
 
+## Variables override
+
+Some properties of the virtual machine and the Proxmox VE installation can be overridden.
+Take a look at `proxmox-ve.json`, object `variables`, to get an idea which values can be
+overridden. Do not override `iso_url` and `iso_checksum` as the `boot_command`s might be
+tied to a specific Proxmox VE version. Also take care when you decide to override `country`.
+
+Create the base box:
+
+```bash
+make build-libvirt VAR_FILE=example.vars.json  # or build-virtualbox or build-hyperv
+```
+
+The following content of `example.vars.json`:
+
+* sets the initial disk size to 128 GB
+* sets the initial memory to 4 GB
+* sets the Packer output base directory to /dev/shm
+* sets the country to Germany (timezone is updated by Proxmox VE installer) and changes
+  the keyboard layout back to "U.S. English" as this is needed for the subsequent
+  `boot_command` statements
+* sets the hostname to pve-test.example.local
+
+  ```json
+  {
+      "disk_size": "131072",
+      "memory": "4096",
+      "output_base_dir": "/dev/shm",
+      "step_country": "Ger<wait>m<wait>a<wait>n<wait><enter>",
+      "step_hostname": "pve-test.example.local",
+      "step_keyboard_layout": "<end><up><wait>"
+  }
+  ```
+
 # Packer boot_command
 
 As Proxmox does not have any way to be pre-seeded, this environment has to answer all the
