@@ -35,8 +35,8 @@ proxmox-ve-amd64-hyperv.box: provisioners/*.sh proxmox-ve.json Vagrantfile.templ
 	mkdir -p tmp
 	CHECKPOINT_DISABLE=1 PACKER_LOG=1 PACKER_LOG_PATH=$@.log \
 		packer build -only=proxmox-ve-amd64-hyperv -on-error=abort -timestamp-ui proxmox-ve.json
-	@echo BOX successfully built!
-	@echo to add to local vagrant install do:
+	@echo Box successfully built!
+	@echo to add it to vagrant run:
 	@echo vagrant box add -f proxmox-ve-amd64 $@
 
 clean:
