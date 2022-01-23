@@ -136,6 +136,8 @@ The following content of `example.vars.json`:
   the keyboard layout back to "U.S. English" as this is needed for the subsequent
   `boot_command` statements
 * sets the hostname to pve-test.example.local
+* uses all default shell provisioners (see [`./provisioners`](./provisioners)) and a
+  custom one for german localisation
 
   ```json
   {
@@ -144,7 +146,8 @@ The following content of `example.vars.json`:
       "output_base_dir": "/dev/shm",
       "step_country": "Ger<wait>m<wait>a<wait>n<wait><enter>",
       "step_hostname": "pve-test.example.local",
-      "step_keyboard_layout": "<end><up><wait>"
+      "step_keyboard_layout": "<end><up><wait>",
+      "shell_provisioner_scripts": "provisioners/apt_proxy.sh,provisioners/upgrade.sh,provisioners/network.sh,localisation-de.sh,provisioners/reboot.sh,provisioners/provision.sh"
   }
   ```
 
