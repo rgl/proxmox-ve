@@ -21,6 +21,12 @@ lxc-ls --version
 cat /etc/os-release
 pveversion -v
 
+# show block devices.
+lsblk -x KNAME -o KNAME,SIZE,TRAN,SUBSYSTEMS,FSTYPE,UUID,LABEL,MODEL,SERIAL
+
+# show disk partitions.
+sfdisk -l
+
 # show the free space.
 df -h /
 
