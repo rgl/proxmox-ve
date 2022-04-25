@@ -4,10 +4,10 @@ param(
 
 $switchName = 'proxmox'
 
-$vm = Get-VM -Id $vmId
+$vm = Hyper-V\Get-VM -Id $vmId
 
-$vmNetworkAdapter = @(Get-VMNetworkAdapter -VM $vm | Where-Object {$_.SwitchName -eq $switchName})
+$vmNetworkAdapter = @(Hyper-V\Get-VMNetworkAdapter -VM $vm | Where-Object {$_.SwitchName -eq $switchName})
 if (!$vmNetworkAdapter) {
     Write-Host "Connecting the VM to the $switchName switch..."
-    Add-VMNetworkAdapter -VM $vm -SwitchName $switchName
+    Hyper-V\Add-VMNetworkAdapter -VM $vm -SwitchName $switchName
 }
