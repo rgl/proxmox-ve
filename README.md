@@ -1,6 +1,6 @@
 This builds an up-to-date [Proxmox VE](https://www.proxmox.com/en/proxmox-ve) Vagrant Base Box.
 
-Currently this targets Proxmox VE 7.1.
+Currently this targets Proxmox VE 7.2.
 
 # Usage
 
