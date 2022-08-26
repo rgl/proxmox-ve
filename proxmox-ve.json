@@ -220,8 +220,8 @@
       "type": "shell",
       "expect_disconnect": true,
       "scripts": [
-        "upgrade.sh",
-        "provision.sh"
+        "provisioners/upgrade.sh",
+        "provisioners/provision.sh"
       ]
     }
   ],
