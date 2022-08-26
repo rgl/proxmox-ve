@@ -4,7 +4,9 @@
     "iso_url": "http://download.proxmox.com/iso/proxmox-ve_7.2-1.iso",
     "iso_checksum": "sha256:ff356eaaff865894a889ee15d29154333539fc254c4edb5736c55449ddf9675c",
     "hyperv_switch_name": "{{env `HYPERV_SWITCH_NAME`}}",
-    "hyperv_vlan_id": "{{env `HYPERV_VLAN_ID`}}"
+    "hyperv_vlan_id": "{{env `HYPERV_VLAN_ID`}}",
+    "apt_cache_host": "{{env `APT_CACHE_HOST`}}",
+    "apt_cache_port": "{{env `APT_CACHE_PORT`}}"
   },
   "builders": [
     {
@@ -219,7 +221,12 @@
     {
       "type": "shell",
       "expect_disconnect": true,
+      "environment_vars": [
+        "apt_cache_host={{user `apt_cache_host`}}",
+        "apt_cache_port={{user `apt_cache_port`}}"
+      ],
       "scripts": [
+        "provisioners/apt_proxy.sh",
         "provisioners/upgrade.sh",
         "provisioners/provision.sh"
       ]

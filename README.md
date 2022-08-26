@@ -83,6 +83,19 @@ cd example
 vagrant up --provider=hyperv
 ```
 
+## Accelerate build time with Apt Caching Proxy
+
+To speed up package downloads, you can specify an apt caching proxy 
+(e.g. [apt-cacher-ng](https://www.unix-ag.uni-kl.de/~bloch/acng/))
+by defining the environment variables `APT_CACHE_HOST` (default: undefined)
+and `APT_CACHE_PORT` (default: 3124).
+
+Example:
+
+```bash
+APT_CACHE_HOST=10.10.10.100 make build-libvirt
+```
+
 # Packer boot_command
 
 As Proxmox does not have any way to be pre-seeded, this environment has to answer all the
