@@ -6,11 +6,13 @@
     "hyperv_switch_name": "{{env `HYPERV_SWITCH_NAME`}}",
     "hyperv_vlan_id": "{{env `HYPERV_VLAN_ID`}}",
     "apt_cache_host": "{{env `APT_CACHE_HOST`}}",
-    "apt_cache_port": "{{env `APT_CACHE_PORT`}}"
+    "apt_cache_port": "{{env `APT_CACHE_PORT`}}",
+    "output_base_dir": "{{env `PACKER_OUTPUT_BASE_DIR`}}"
   },
   "builders": [
     {
       "name": "proxmox-ve-amd64-libvirt",
+      "output_directory": "{{user `output_base_dir`}}/output-proxmox-ve-amd64-libvirt",
       "type": "qemu",
       "accelerator": "kvm",
       "cpus": 2,
@@ -58,6 +60,7 @@
     },
     {
       "name": "proxmox-ve-uefi-amd64-libvirt",
+      "output_directory": "{{user `output_base_dir`}}/output-proxmox-ve-uefi-amd64-libvirt",
       "type": "qemu",
       "accelerator": "kvm",
       "cpus": 2,
@@ -106,6 +109,7 @@
     },
     {
       "name": "proxmox-ve-amd64-virtualbox",
+      "output_directory": "{{user `output_base_dir`}}/output-proxmox-ve-amd64-virtualbox",
       "type": "virtualbox-iso",
       "guest_os_type": "Debian_64",
       "guest_additions_mode": "attach",
@@ -162,6 +166,7 @@
     },
     {
       "name": "proxmox-ve-amd64-hyperv",
+      "output_directory": "{{user `output_base_dir`}}/output-proxmox-ve-amd64-hyperv",
       "type": "hyperv-iso",
       "temp_path": "tmp",
       "headless": true,
