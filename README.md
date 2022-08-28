@@ -85,7 +85,7 @@ vagrant up --provider=hyperv
 
 ## Packer build performance options
 
-To improve build performance you can use one or all of the following options.
+To improve the build performance you can use the following options.
 
 ### Accelerate build time with Apt Caching Proxy
 
@@ -100,11 +100,11 @@ Example:
 APT_CACHE_HOST=10.10.10.100 make build-libvirt
 ```
 
-### Decrease disk wear by using temporary file storage
+### Decrease disk wear by using temporary memory file-system
 
 To decrease disk wear (and potentially reduce io times),
-you can use `/dev/shm` as `output_directory` for Packer builders.
-Your system has to have enough available memory to store the created virtual machine.
+you can use `/dev/shm` (temporary memory file-system) as `output_directory` for Packer builders.
+Your system must have enough available memory to store the created virtual machine.
 
 Example:
 
