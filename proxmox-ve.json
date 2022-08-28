@@ -12,7 +12,6 @@
   "builders": [
     {
       "name": "proxmox-ve-amd64-libvirt",
-      "output_directory": "{{user `output_base_dir`}}/output-proxmox-ve-amd64-libvirt",
       "type": "qemu",
       "accelerator": "kvm",
       "cpus": 2,
@@ -28,6 +27,7 @@
       "disk_discard": "unmap",
       "iso_url": "{{user `iso_url`}}",
       "iso_checksum": "{{user `iso_checksum`}}",
+      "output_directory": "{{user `output_base_dir`}}/output-{{build_name}}",
       "ssh_username": "root",
       "ssh_password": "vagrant",
       "ssh_timeout": "60m",
@@ -60,7 +60,6 @@
     },
     {
       "name": "proxmox-ve-uefi-amd64-libvirt",
-      "output_directory": "{{user `output_base_dir`}}/output-proxmox-ve-uefi-amd64-libvirt",
       "type": "qemu",
       "accelerator": "kvm",
       "cpus": 2,
@@ -77,6 +76,7 @@
       "disk_discard": "unmap",
       "iso_url": "{{user `iso_url`}}",
       "iso_checksum": "{{user `iso_checksum`}}",
+      "output_directory": "{{user `output_base_dir`}}/output-{{build_name}}",
       "ssh_username": "root",
       "ssh_password": "vagrant",
       "ssh_timeout": "60m",
@@ -109,7 +109,6 @@
     },
     {
       "name": "proxmox-ve-amd64-virtualbox",
-      "output_directory": "{{user `output_base_dir`}}/output-proxmox-ve-amd64-virtualbox",
       "type": "virtualbox-iso",
       "guest_os_type": "Debian_64",
       "guest_additions_mode": "attach",
@@ -134,6 +133,7 @@
       "hard_drive_discard": true,
       "iso_url": "{{user `iso_url`}}",
       "iso_checksum": "{{user `iso_checksum`}}",
+      "output_directory": "{{user `output_base_dir`}}/output-{{build_name}}",
       "ssh_username": "root",
       "ssh_password": "vagrant",
       "ssh_timeout": "60m",
@@ -166,7 +166,6 @@
     },
     {
       "name": "proxmox-ve-amd64-hyperv",
-      "output_directory": "{{user `output_base_dir`}}/output-proxmox-ve-amd64-hyperv",
       "type": "hyperv-iso",
       "temp_path": "tmp",
       "headless": true,
@@ -180,6 +179,7 @@
       "disk_size": "{{user `disk_size`}}",
       "iso_url": "{{user `iso_url`}}",
       "iso_checksum": "{{user `iso_checksum`}}",
+      "output_directory": "{{user `output_base_dir`}}/output-{{build_name}}",
       "ssh_username": "root",
       "ssh_password": "vagrant",
       "ssh_timeout": "60m",
