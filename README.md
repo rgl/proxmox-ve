@@ -83,7 +83,11 @@ cd example
 vagrant up --provider=hyperv
 ```
 
-## Accelerate build time with Apt Caching Proxy
+## Packer build performance options
+
+To improve the build performance you can use the following options.
+
+### Accelerate build time with Apt Caching Proxy
 
 To speed up package downloads, you can specify an apt caching proxy 
 (e.g. [apt-cacher-ng](https://www.unix-ag.uni-kl.de/~bloch/acng/))
@@ -95,6 +99,20 @@ Example:
 ```bash
 APT_CACHE_HOST=10.10.10.100 make build-libvirt
 ```
+
+### Decrease disk wear by using temporary memory file-system
+
+To decrease disk wear (and potentially reduce io times),
+you can use `/dev/shm` (temporary memory file-system) as `output_directory` for Packer builders.
+Your system must have enough available memory to store the created virtual machine.
+
+Example:
+
+```bash
+PACKER_OUTPUT_BASE_DIR=/dev/shm make build-libvirt
+```
+
+Remember to also define `PACKER_OUTPUT_BASE_DIR` when you run `make clean` afterwards.
 
 # Packer boot_command
 

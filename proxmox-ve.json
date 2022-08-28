@@ -6,7 +6,8 @@
     "hyperv_switch_name": "{{env `HYPERV_SWITCH_NAME`}}",
     "hyperv_vlan_id": "{{env `HYPERV_VLAN_ID`}}",
     "apt_cache_host": "{{env `APT_CACHE_HOST`}}",
-    "apt_cache_port": "{{env `APT_CACHE_PORT`}}"
+    "apt_cache_port": "{{env `APT_CACHE_PORT`}}",
+    "output_base_dir": "{{env `PACKER_OUTPUT_BASE_DIR`}}"
   },
   "builders": [
     {
@@ -26,6 +27,7 @@
       "disk_discard": "unmap",
       "iso_url": "{{user `iso_url`}}",
       "iso_checksum": "{{user `iso_checksum`}}",
+      "output_directory": "{{user `output_base_dir`}}/output-{{build_name}}",
       "ssh_username": "root",
       "ssh_password": "vagrant",
       "ssh_timeout": "60m",
@@ -74,6 +76,7 @@
       "disk_discard": "unmap",
       "iso_url": "{{user `iso_url`}}",
       "iso_checksum": "{{user `iso_checksum`}}",
+      "output_directory": "{{user `output_base_dir`}}/output-{{build_name}}",
       "ssh_username": "root",
       "ssh_password": "vagrant",
       "ssh_timeout": "60m",
@@ -130,6 +133,7 @@
       "hard_drive_discard": true,
       "iso_url": "{{user `iso_url`}}",
       "iso_checksum": "{{user `iso_checksum`}}",
+      "output_directory": "{{user `output_base_dir`}}/output-{{build_name}}",
       "ssh_username": "root",
       "ssh_password": "vagrant",
       "ssh_timeout": "60m",
@@ -175,6 +179,7 @@
       "disk_size": "{{user `disk_size`}}",
       "iso_url": "{{user `iso_url`}}",
       "iso_checksum": "{{user `iso_checksum`}}",
+      "output_directory": "{{user `output_base_dir`}}/output-{{build_name}}",
       "ssh_username": "root",
       "ssh_password": "vagrant",
       "ssh_timeout": "60m",

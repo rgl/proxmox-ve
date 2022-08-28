@@ -8,7 +8,7 @@ build-hyperv: proxmox-ve-amd64-hyperv.box
 
 proxmox-ve-amd64-libvirt.box: provisioners/*.sh proxmox-ve.json Vagrantfile.template
 	rm -f $@
-	PACKER_KEY_INTERVAL=10ms CHECKPOINT_DISABLE=1 PACKER_LOG=1 PACKER_LOG_PATH=$@.log \
+	PACKER_OUTPUT_BASE_DIR=$${PACKER_OUTPUT_BASE_DIR:-.} PACKER_KEY_INTERVAL=10ms CHECKPOINT_DISABLE=1 PACKER_LOG=1 PACKER_LOG_PATH=$@.log \
 		packer build -only=proxmox-ve-amd64-libvirt -on-error=abort -timestamp-ui proxmox-ve.json
 	@echo Box successfully built!
 	@echo to add it to vagrant run:
@@ -16,7 +16,7 @@ proxmox-ve-amd64-libvirt.box: provisioners/*.sh proxmox-ve.json Vagrantfile.temp
 
 proxmox-ve-uefi-amd64-libvirt.box: provisioners/*.sh proxmox-ve.json Vagrantfile-uefi.template
 	rm -f $@
-	PACKER_KEY_INTERVAL=10ms CHECKPOINT_DISABLE=1 PACKER_LOG=1 PACKER_LOG_PATH=$@.log \
+	PACKER_OUTPUT_BASE_DIR=$${PACKER_OUTPUT_BASE_DIR:-.} PACKER_KEY_INTERVAL=10ms CHECKPOINT_DISABLE=1 PACKER_LOG=1 PACKER_LOG_PATH=$@.log \
 		packer build -only=proxmox-ve-uefi-amd64-libvirt -on-error=abort -timestamp-ui proxmox-ve.json
 	@echo Box successfully built!
 	@echo to add it to vagrant run:
@@ -24,7 +24,7 @@ proxmox-ve-uefi-amd64-libvirt.box: provisioners/*.sh proxmox-ve.json Vagrantfile
 
 proxmox-ve-amd64-virtualbox.box: provisioners/*.sh proxmox-ve.json Vagrantfile.template
 	rm -f $@
-	CHECKPOINT_DISABLE=1 PACKER_LOG=1 PACKER_LOG_PATH=$@.log \
+	PACKER_OUTPUT_BASE_DIR=$${PACKER_OUTPUT_BASE_DIR:-.} CHECKPOINT_DISABLE=1 PACKER_LOG=1 PACKER_LOG_PATH=$@.log \
 		packer build -only=proxmox-ve-amd64-virtualbox -on-error=abort -timestamp-ui proxmox-ve.json
 	@echo Box successfully built!
 	@echo to add it to vagrant run:
@@ -33,13 +33,13 @@ proxmox-ve-amd64-virtualbox.box: provisioners/*.sh proxmox-ve.json Vagrantfile.t
 proxmox-ve-amd64-hyperv.box: provisioners/*.sh proxmox-ve.json Vagrantfile.template
 	rm -f $@
 	mkdir -p tmp
-	CHECKPOINT_DISABLE=1 PACKER_LOG=1 PACKER_LOG_PATH=$@.log \
+	PACKER_OUTPUT_BASE_DIR=$${PACKER_OUTPUT_BASE_DIR:-.} CHECKPOINT_DISABLE=1 PACKER_LOG=1 PACKER_LOG_PATH=$@.log \
 		packer build -only=proxmox-ve-amd64-hyperv -on-error=abort -timestamp-ui proxmox-ve.json
 	@echo Box successfully built!
 	@echo to add it to vagrant run:
 	@echo vagrant box add -f proxmox-ve-amd64 $@
 
 clean:
-	rm -rf packer_cache output-proxmox-ve*
+	rm -rf packer_cache $${PACKER_OUTPUT_BASE_DIR:-.}/output-proxmox-ve*
 
 .PHONY: help build-libvirt build-virtualbox build-hyperv clean
