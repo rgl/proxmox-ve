@@ -44,4 +44,4 @@ cp $domain-key.pem "/etc/pve/nodes/$dn/pveproxy-ssl.key"
 cp $domain-crt.pem "/etc/pve/nodes/$dn/pveproxy-ssl.pem"
 systemctl restart pveproxy
 # dump the TLS connection details and certificate validation result.
-(printf 'GET /404 HTTP/1.0\r\n\r\n'; sleep .1) | openssl s_client -CAfile $domain-crt.pem -connect $domain:8006 -servername $domain
+(printf 'GET /api2/json HTTP/1.0\r\n\r\n'; sleep .1) | openssl s_client -CAfile $domain-crt.pem -connect $domain:8006 -servername $domain
