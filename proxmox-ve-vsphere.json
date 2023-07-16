@@ -1,0 +1,108 @@
+{
+  "variables": {
+    "cpus": "2",
+    "memory": "2048",
+    "disk_size": "20480",
+    "vsphere_host": "{{env `GOVC_HOST`}}",
+    "vsphere_username": "{{env `GOVC_USERNAME`}}",
+    "vsphere_password": "{{env `GOVC_PASSWORD`}}",
+    "vsphere_esxi_host": "{{env `VSPHERE_ESXI_HOST`}}",
+    "vsphere_datacenter": "{{env `GOVC_DATACENTER`}}",
+    "vsphere_cluster": "{{env `GOVC_CLUSTER`}}",
+    "vsphere_datastore": "{{env `GOVC_DATASTORE`}}",
+    "vsphere_folder": "{{env `VSPHERE_TEMPLATE_FOLDER`}}",
+    "vsphere_network": "{{env `VSPHERE_VLAN`}}",
+    "vsphere_ip_wait_address": "{{env `VSPHERE_IP_WAIT_ADDRESS`}}",
+    "vsphere_os_iso": "{{env `VSPHERE_OS_ISO`}}",
+    "apt_cache_host": "{{env `APT_CACHE_HOST`}}",
+    "apt_cache_port": "{{env `APT_CACHE_PORT`}}",
+    "step_country": "United S<wait>t<wait>a<wait>t<wait>e<wait>s<wait><enter><wait>",
+    "step_email": "pve@example.com",
+    "step_hostname": "pve.example.com",
+    "step_keyboard_layout": "",
+    "step_timezone": "",
+    "shell_provisioner_scripts": "provisioners/apt_proxy.sh,provisioners/upgrade.sh,provisioners/network.sh,provisioners/localisation-pt.sh,provisioners/reboot.sh,provisioners/provision.sh"
+  },
+  "builders": [
+    {
+      "type": "vsphere-iso",
+      "name": "proxmox-ve-amd64-vsphere",
+      "vm_name": "proxmox-ve-amd64-vsphere",
+      "guest_os_type": "debian12_64Guest",
+      "NestedHV": true,
+      "CPUs": "{{user `cpus`}}",
+      "RAM": "{{user `memory`}}",
+      "datastore": "{{user `vsphere_datastore`}}",
+      "storage": [
+        {
+          "disk_size": "{{user `disk_size`}}",
+          "disk_thin_provisioned": true
+        }
+      ],
+      "disk_controller_type": "pvscsi",
+      "iso_paths": [
+        "{{user `vsphere_os_iso`}}"
+      ],
+      "network_adapters": [
+        {
+          "network": "{{user `vsphere_network`}}",
+          "network_card": "vmxnet3"
+        }
+      ],
+      "vcenter_server": "{{user `vsphere_host`}}",
+      "username": "{{user `vsphere_username`}}",
+      "password": "{{user `vsphere_password`}}",
+      "insecure_connection": "true",
+      "datacenter": "{{user `vsphere_datacenter`}}",
+      "cluster": "{{user `vsphere_cluster`}}",
+      "host": "{{user `vsphere_esxi_host`}}",
+      "folder": "{{user `vsphere_folder`}}",
+      "convert_to_template": true,
+      "ssh_username": "root",
+      "ssh_password": "vagrant",
+      "ssh_timeout": "60m",
+      "boot_wait": "5s",
+      "boot_command": [
+        "<enter>",
+        "<wait1m>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "{{user `step_country`}}<tab><wait>",
+        "{{user `step_timezone`}}<tab><wait>",
+        "{{user `step_keyboard_layout`}}<tab><wait>",
+        "<tab><wait>",
+        "<enter><wait5>",
+        "vagrant<tab><wait>",
+        "vagrant<tab><wait>",
+        "{{user `step_email`}}<tab><wait>",
+        "<tab><wait>",
+        "<enter><wait5>",
+        "{{user `step_hostname`}}<tab><wait>",
+        "<tab><wait>",
+        "<tab><wait>",
+        "<tab><wait>",
+        "<tab><wait>",
+        "<tab><wait>",
+        "<enter><wait5>",
+        "<enter><wait5>",
+        "<wait10m>",
+        "root<enter>vagrant<enter><wait5s>",
+        "apt-get update<enter><wait15s>",
+        "apt-get install -y open-vm-tools<enter><wait1m>",
+        "exit<enter>"
+      ],
+      "shutdown_command": "poweroff"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "expect_disconnect": true,
+      "environment_vars": [
+        "apt_cache_host={{user `apt_cache_host`}}",
+        "apt_cache_port={{user `apt_cache_port`}}"
+      ],
+      "scripts": "{{user `shell_provisioner_scripts`}}"
+    }
+  ]
+}

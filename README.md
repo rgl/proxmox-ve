@@ -83,6 +83,71 @@ cd example
 vagrant up --provider=hyperv
 ```
 
+## VMware vSphere usage
+
+Download [govc](https://github.com/vmware/govmomi/releases/latest) and place it inside your `/usr/local/bin` directory.
+
+Set your VMware vSphere details and test the connection:
+
+```bash
+sudo apt-get install build-essential patch ruby-dev zlib1g-dev liblzma-dev
+vagrant plugin install vagrant-vsphere
+cat >secrets-vsphere.sh <<'EOF'
+export GOVC_INSECURE='1'
+export GOVC_HOST='vsphere.local'
+export GOVC_URL="https://$GOVC_HOST/sdk"
+export GOVC_USERNAME='administrator@vsphere.local'
+export GOVC_PASSWORD='password'
+export GOVC_DATACENTER='Datacenter'
+export GOVC_CLUSTER='Cluster'
+export GOVC_DATASTORE='Datastore'
+export VSPHERE_OS_ISO="[$GOVC_DATASTORE] iso/proxmox-ve_8.0-2.iso"
+export VSPHERE_ESXI_HOST='esxi.local'
+export VSPHERE_TEMPLATE_FOLDER='test/templates'
+export VSPHERE_TEMPLATE_NAME="$VSPHERE_TEMPLATE_FOLDER/proxmox-ve-amd64-vsphere"
+export VSPHERE_VM_FOLDER='test'
+export VSPHERE_VM_NAME='proxmox-ve-example'
+# NB for the nested VMs to access the network, this VLAN port group security
+#    policy MUST be configured to Accept:
+#      Promiscuous mode
+#      Forged transmits
+export VSPHERE_VLAN='packer'
+export VSPHERE_IP_WAIT_ADDRESS='0.0.0.0/0'
+# set the credentials that the guest will use
+# to connect to this host smb share.
+# NB you should create a new local user named _vagrant_share
+#    and use that one here instead of your user credentials.
+# NB it would be nice for this user to have its credentials
+#    automatically rotated, if you implement that feature,
+#    let me known!
+export VAGRANT_SMB_USERNAME='_vagrant_share'
+export VAGRANT_SMB_PASSWORD=''
+EOF
+source secrets-vsphere.sh
+# see https://github.com/vmware/govmomi/blob/master/govc/USAGE.md
+govc version
+govc about
+govc datacenter.info # list datacenters
+govc find # find all managed objects
+```
+
+Download the Proxmox ISO (you can find the full iso URL in the [proxmox-ve.json](proxmox-ve.json) file) and place it inside the datastore as defined by the `iso_paths` property that is inside the [packer template](proxmox-ve-vsphere.json) file.
+
+See the [example Vagrantfile](example/Vagrantfile) to see how you could use a cloud-init configuration to configure the VM.
+
+Type `make build-vsphere` and follow the instructions.
+
+Try the example guest:
+
+```bash
+source secrets-vsphere.sh
+cd example
+vagrant up --provider=vsphere --no-destroy-on-error --no-tty
+vagrant ssh
+exit
+vagrant destroy -f
+```
+
 ## Packer build performance options
 
 To improve the build performance you can use the following options.

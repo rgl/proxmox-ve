@@ -51,6 +51,10 @@ REMOVE_INSTALLATION_DIR=0 /mnt/VBoxLinuxAdditions.run --target /tmp/VBoxGuestAdd
 rm -rf /tmp/VBoxGuestAdditions
 umount /mnt
 eject /dev/sr1
+elif [ -n "$(lspci | grep VMware | head -1)" ]; then
+# install the VMware Guest Additions.
+# NB the open-vm-tools package was already installed from the packer boot_command.
+true
 else
 # install the qemu-kvm Guest Additions.
 apt-get install -y qemu-guest-agent spice-vdagent
