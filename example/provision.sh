@@ -12,12 +12,13 @@ while true; do
     apt-get update && break || sleep 5
 done
 
-# extend the main partition to the end of the disk
-# and extend the pve/data logical volume to use all
-# the free space.
+# extend the main partition to the end of the disk and extend the
+# pve/root and pve/data logical volume to use all the free space.
 apt-get install -y cloud-guest-utils
 if growpart /dev/[vs]da 3; then
     pvresize /dev/[vs]da3
+    lvextend --extents +10%FREE /dev/pve/root
+    resize2fs /dev/pve/root
     lvextend --extents +100%FREE /dev/pve/data
 fi
 

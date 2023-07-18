@@ -4,7 +4,7 @@ require 'open3'
 
 VM_CPU = 4
 VM_MEMORY_GB = 4
-VM_BOOT_DISK_SIZE_GB = 30
+VM_ROOT_DISK_SIZE_GB = 128
 
 Vagrant.configure('2') do |config|
   config.vm.box = 'proxmox-ve-amd64'
@@ -15,7 +15,7 @@ Vagrant.configure('2') do |config|
     lv.cpu_mode = 'host-passthrough'
     lv.nested = true
     lv.keymap = 'pt'
-    lv.machine_virtual_size = VM_BOOT_DISK_SIZE_GB
+    lv.machine_virtual_size = VM_ROOT_DISK_SIZE_GB
     config.vm.synced_folder '.', '/vagrant', type: 'nfs', nfs_version: '4.2', nfs_udp: false
   end
   config.vm.provider :virtualbox do |vb|
@@ -83,7 +83,7 @@ Vagrant.configure('2') do |config|
           'bash',
           'configure-vsphere.sh',
           machine.id,
-          "#{VM_BOOT_DISK_SIZE_GB}",
+          "#{VM_ROOT_DISK_SIZE_GB}",
           "#{ENV['VSPHERE_VLAN']}")
         if status.exitstatus != 0
           raise "failed to configure vsphere. status=#{status.exitstatus} stdout=#{stdout} stderr=#{stderr}"
