@@ -121,7 +121,7 @@ if [ "$(lsblk -no DISC-GRAN $(findmnt -no SOURCE /) | awk '{print $1}')" != '0B'
         bytes_trimmed="$(echo "$output" | perl -n -e '/\((\d+) bytes\)/ && print $1')"
         # NB if this never reaches zero, it might be because there is not
         #    enough free space for completing the trim.
-        if (( bytes_trimmed < $((16*1024*1024)) )); then # < 16 MiB is good enough.
+        if (( bytes_trimmed < $((100*1024*1024)) )); then # < 100 MiB is good enough.
             break
         fi
     done

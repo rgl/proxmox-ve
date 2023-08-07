@@ -4,5 +4,6 @@ output-*/
 shared/
 tmp/
 *.box
+*.box.json
 *.log
 secrets*

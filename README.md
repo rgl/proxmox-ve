@@ -182,17 +182,17 @@ Remember to also define `PACKER_OUTPUT_BASE_DIR` when you run `make clean` after
 ## Variables override
 
 Some properties of the virtual machine and the Proxmox VE installation can be overridden.
-Take a look at `proxmox-ve.json`, object `variables`, to get an idea which values can be
+Take a look at `proxmox-ve.pkr.hcl`, `variable` blocks, to get an idea which values can be
 overridden. Do not override `iso_url` and `iso_checksum` as the `boot_command`s might be
 tied to a specific Proxmox VE version. Also take care when you decide to override `country`.
 
 Create the base box:
 
 ```bash
-make build-libvirt VAR_FILE=example.vars.json  # or build-virtualbox or build-hyperv
+make build-libvirt VAR_FILE=example.pkrvars.hcl  # or build-virtualbox or build-hyperv
 ```
 
-The following content of `example.vars.json`:
+The following content of `example.pkrvars.hcl`:
 
 * sets the initial disk size to 128 GB
 * sets the initial memory to 4 GB
@@ -204,17 +204,22 @@ The following content of `example.vars.json`:
 * uses all default shell provisioners (see [`./provisioners`](./provisioners)) and a
   custom one for german localisation
 
-  ```json
-  {
-      "disk_size": "131072",
-      "memory": "4096",
-      "output_base_dir": "/dev/shm",
-      "step_country": "Ger<wait>m<wait>a<wait>n<wait><enter>",
-      "step_hostname": "pve-test.example.local",
-      "step_keyboard_layout": "<end><up><wait>",
-      "shell_provisioner_scripts": "provisioners/apt_proxy.sh,provisioners/upgrade.sh,provisioners/network.sh,localisation-de.sh,provisioners/reboot.sh,provisioners/provision.sh"
-  }
-  ```
+```hcl
+disk_size = 128 * 1024
+memory = 4 * 1024
+output_base_dir = "/dev/shm"
+step_country = "Ger<wait>m<wait>a<wait>n<wait><enter>"
+step_hostname = "pve-test.example.local"
+step_keyboard_layout = "<end><up><wait>"
+shell_provisioner_scripts = [
+  "provisioners/apt_proxy.sh",
+  "provisioners/upgrade.sh",
+  "provisioners/network.sh",
+  "provisioners/localisation-de.sh",
+  "provisioners/reboot.sh",
+  "provisioners/provision.sh",
+]
+```
 
 # Packer boot_command
 

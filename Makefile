@@ -1,3 +1,6 @@
+SHELL=bash
+.SHELLFLAGS=-euo pipefail -c
+
 VAR_FILE :=
 VAR_FILE_OPTION := $(addprefix -var-file=,$(VAR_FILE))
 
@@ -10,52 +13,83 @@ build-virtualbox: proxmox-ve-amd64-virtualbox.box
 build-hyperv: proxmox-ve-amd64-hyperv.box
 build-vsphere: proxmox-ve-amd64-vsphere.box
 
-proxmox-ve-amd64-libvirt.box: provisioners/*.sh proxmox-ve.json Vagrantfile.template $(VAR_FILE)
+proxmox-ve-amd64-libvirt.box: provisioners/*.sh proxmox-ve.pkr.hcl Vagrantfile.template $(VAR_FILE)
 	rm -f $@
-	PACKER_OUTPUT_BASE_DIR=$${PACKER_OUTPUT_BASE_DIR:-.} PACKER_KEY_INTERVAL=10ms CHECKPOINT_DISABLE=1 PACKER_LOG=1 PACKER_LOG_PATH=$@.log \
-		packer build -only=proxmox-ve-amd64-libvirt -on-error=abort -timestamp-ui $(VAR_FILE_OPTION) proxmox-ve.json
-	@echo Box successfully built!
-	@echo to add it to vagrant run:
-	@echo vagrant box add -f proxmox-ve-amd64 $@
+	CHECKPOINT_DISABLE=1 \
+	PACKER_LOG=1 \
+	PACKER_LOG_PATH=$@.init.log \
+		packer init proxmox-ve.pkr.hcl
+	PACKER_OUTPUT_BASE_DIR=$${PACKER_OUTPUT_BASE_DIR:-.} \
+	PACKER_KEY_INTERVAL=10ms \
+	CHECKPOINT_DISABLE=1 \
+	PACKER_LOG=1 \
+	PACKER_LOG_PATH=$@.log \
+	PKR_VAR_vagrant_box=$@ \
+		packer build -only=qemu.proxmox-ve-amd64 -on-error=abort -timestamp-ui $(VAR_FILE_OPTION) proxmox-ve.pkr.hcl
+	@./box-metadata.sh libvirt proxmox-ve-amd64 $@
 
-proxmox-ve-uefi-amd64-libvirt.box: provisioners/*.sh proxmox-ve.json Vagrantfile-uefi.template $(VAR_FILE)
+proxmox-ve-uefi-amd64-libvirt.box: provisioners/*.sh proxmox-ve.pkr.hcl Vagrantfile-uefi.template $(VAR_FILE)
 	rm -f $@
-	PACKER_OUTPUT_BASE_DIR=$${PACKER_OUTPUT_BASE_DIR:-.} PACKER_KEY_INTERVAL=10ms CHECKPOINT_DISABLE=1 PACKER_LOG=1 PACKER_LOG_PATH=$@.log \
-		packer build -only=proxmox-ve-uefi-amd64-libvirt -on-error=abort -timestamp-ui $(VAR_FILE_OPTION) proxmox-ve.json
-	@echo Box successfully built!
-	@echo to add it to vagrant run:
-	@echo vagrant box add -f proxmox-ve-uefi-amd64 $@
+	CHECKPOINT_DISABLE=1 \
+	PACKER_LOG=1 \
+	PACKER_LOG_PATH=$@.init.log \
+		packer init proxmox-ve.pkr.hcl
+	PACKER_OUTPUT_BASE_DIR=$${PACKER_OUTPUT_BASE_DIR:-.} \
+	PACKER_KEY_INTERVAL=10ms \
+	CHECKPOINT_DISABLE=1 \
+	PACKER_LOG=1 \
+	PACKER_LOG_PATH=$@.log \
+	PKR_VAR_vagrant_box=$@ \
+		packer build -only=qemu.proxmox-ve-uefi-amd64 -on-error=abort -timestamp-ui $(VAR_FILE_OPTION) proxmox-ve.pkr.hcl
+	@./box-metadata.sh libvirt proxmox-ve-uefi-amd64 $@
 
-proxmox-ve-amd64-virtualbox.box: provisioners/*.sh proxmox-ve.json Vagrantfile.template $(VAR_FILE)
+proxmox-ve-amd64-virtualbox.box: provisioners/*.sh proxmox-ve.pkr.hcl Vagrantfile.template $(VAR_FILE)
 	rm -f $@
-	PACKER_OUTPUT_BASE_DIR=$${PACKER_OUTPUT_BASE_DIR:-.} CHECKPOINT_DISABLE=1 PACKER_LOG=1 PACKER_LOG_PATH=$@.log \
-		packer build -only=proxmox-ve-amd64-virtualbox -on-error=abort -timestamp-ui $(VAR_FILE_OPTION) proxmox-ve.json
-	@echo Box successfully built!
-	@echo to add it to vagrant run:
-	@echo vagrant box add -f proxmox-ve-amd64 $@
+	CHECKPOINT_DISABLE=1 \
+	PACKER_LOG=1 \
+	PACKER_LOG_PATH=$@.init.log \
+		packer init proxmox-ve.pkr.hcl
+	PACKER_OUTPUT_BASE_DIR=$${PACKER_OUTPUT_BASE_DIR:-.} \
+	CHECKPOINT_DISABLE=1 \
+	PACKER_LOG=1 \
+	PACKER_LOG_PATH=$@.log \
+	PKR_VAR_vagrant_box=$@ \
+		packer build -only=virtualbox-iso.proxmox-ve-amd64 -on-error=abort -timestamp-ui $(VAR_FILE_OPTION) proxmox-ve.pkr.hcl
+	@./box-metadata.sh virtualbox proxmox-ve-amd64 $@
 
-proxmox-ve-amd64-hyperv.box: provisioners/*.sh proxmox-ve.json Vagrantfile.template $(VAR_FILE)
+proxmox-ve-amd64-hyperv.box: provisioners/*.sh proxmox-ve.pkr.hcl Vagrantfile.template $(VAR_FILE)
 	rm -f $@
 	mkdir -p tmp
-	PACKER_OUTPUT_BASE_DIR=$${PACKER_OUTPUT_BASE_DIR:-.} CHECKPOINT_DISABLE=1 PACKER_LOG=1 PACKER_LOG_PATH=$@.log \
-		packer build -only=proxmox-ve-amd64-hyperv -on-error=abort -timestamp-ui $(VAR_FILE_OPTION) proxmox-ve.json
-	@echo Box successfully built!
-	@echo to add it to vagrant run:
-	@echo vagrant box add -f proxmox-ve-amd64 $@
+	CHECKPOINT_DISABLE=1 \
+	PACKER_LOG=1 \
+	PACKER_LOG_PATH=$@.init.log \
+		packer init proxmox-ve.pkr.hcl
+	PACKER_OUTPUT_BASE_DIR=$${PACKER_OUTPUT_BASE_DIR:-.} \
+	CHECKPOINT_DISABLE=1 \
+	PACKER_LOG=1 \
+	PACKER_LOG_PATH=$@.log \
+	PKR_VAR_vagrant_box=$@ \
+		packer build -only=hyperv-iso.proxmox-ve-amd64 -on-error=abort -timestamp-ui $(VAR_FILE_OPTION) proxmox-ve.pkr.hcl
+	@./box-metadata.sh hyperv proxmox-ve-amd64 $@
 
-proxmox-ve-amd64-vsphere.box: provisioners/*.sh proxmox-ve-vsphere.json $(VAR_FILE)
+proxmox-ve-amd64-vsphere.box: provisioners/*.sh proxmox-ve-vsphere.pkr.hcl $(VAR_FILE)
 	rm -f $@
 	mkdir -p tmp
-	PACKER_OUTPUT_BASE_DIR=$${PACKER_OUTPUT_BASE_DIR:-.} CHECKPOINT_DISABLE=1 PACKER_LOG=1 PACKER_LOG_PATH=$@.log \
-		packer build -only=proxmox-ve-amd64-vsphere -on-error=abort -timestamp-ui $(VAR_FILE_OPTION) proxmox-ve-vsphere.json
+	CHECKPOINT_DISABLE=1 \
+	PACKER_LOG=1 \
+	PACKER_LOG_PATH=$@.init.log \
+		packer init proxmox-ve-vsphere.pkr.hcl
+	PACKER_OUTPUT_BASE_DIR=$${PACKER_OUTPUT_BASE_DIR:-.} \
+	CHECKPOINT_DISABLE=1 \
+	PACKER_LOG=1 \
+	PACKER_LOG_PATH=$@.log \
+		packer build -only=vsphere-iso.proxmox-ve-amd64 -on-error=abort -timestamp-ui $(VAR_FILE_OPTION) proxmox-ve-vsphere.pkr.hcl
 	rm -rf tmp/$@-contents
 	mkdir -p tmp/$@-contents
 	echo '{"provider":"vsphere"}' >tmp/$@-contents/metadata.json
 	cp Vagrantfile.template tmp/$@-contents/Vagrantfile
 	tar cvf $@ -C tmp/$@-contents .
-	@echo Box successfully built!
-	@echo to add it to vagrant run:
-	@echo vagrant box add -f proxmox-ve-amd64 $@
+	@./box-metadata.sh vsphere proxmox-ve-amd64 $@
 
 clean:
 	rm -rf packer_cache $${PACKER_OUTPUT_BASE_DIR:-.}/output-proxmox-ve*
