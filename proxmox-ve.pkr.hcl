@@ -5,6 +5,11 @@ packer {
       version = "1.0.9"
       source  = "github.com/hashicorp/qemu"
     }
+    # see https://github.com/hashicorp/packer-plugin-proxmox
+    proxmox = {
+      version = "1.1.3"
+      source  = "github.com/hashicorp/proxmox"
+    }
     # see https://github.com/hashicorp/packer-plugin-virtualbox
     virtualbox = {
       version = "1.0.4"
@@ -50,6 +55,11 @@ variable "iso_url" {
 variable "iso_checksum" {
   type    = string
   default = "sha256:e2b27648a8a91c0da1e8e718882a5ff87a8f054c4dd7e0ea1d8af85125d82812"
+}
+
+variable "proxmox_node" {
+  type    = string
+  default = env("PROXMOX_NODE")
 }
 
 variable "hyperv_switch_name" {
@@ -216,6 +226,147 @@ source "qemu" "proxmox-ve-uefi-amd64" {
   shutdown_command = "poweroff"
 }
 
+source "proxmox-iso" "proxmox-ve-amd64" {
+  template_name            = "template-proxmox-ve"
+  template_description     = "See https://github.com/rgl/proxmox-ve"
+  insecure_skip_tls_verify = true
+  node                     = var.proxmox_node
+  machine                  = "q35"
+  bios                     = "seabios"
+  cpu_type                 = "host"
+  cores                    = var.cpus
+  memory                   = var.memory
+  vga {
+    type   = "qxl"
+    memory = 16
+  }
+  network_adapters {
+    model  = "virtio"
+    bridge = "vmbr0"
+  }
+  scsi_controller = "virtio-scsi-pci"
+  disks {
+    type         = "scsi"
+    disk_size    = "${var.disk_size}M"
+    storage_pool = "local-lvm"
+  }
+  iso_storage_pool = "local"
+  iso_url          = var.iso_url
+  iso_checksum     = var.iso_checksum
+  unmount_iso      = true
+  os               = "l26"
+  ssh_username     = "root"
+  ssh_password     = "vagrant"
+  ssh_timeout      = "60m"
+  http_directory   = "."
+  boot_wait        = "30s"
+  boot_command = [
+    "<enter>",
+    "<wait1m>",
+    "<enter><wait>",
+    "<enter><wait>",
+    "${var.step_country}<tab><wait>",
+    "${var.step_timezone}<tab><wait>",
+    "${var.step_keyboard_layout}<tab><wait>",
+    "<tab><wait>",
+    "<enter><wait5>",
+    "vagrant<tab><wait>",
+    "vagrant<tab><wait>",
+    "${var.step_email}<tab><wait>",
+    "<tab><wait>",
+    "<enter><wait5>",
+    "${var.step_hostname}<tab><wait>",
+    "<tab><wait>",
+    "<tab><wait>",
+    "<tab><wait>",
+    "<tab><wait>",
+    "<tab><wait>",
+    "<enter><wait5>",
+    "<enter><wait5>",
+    "<wait4m>",
+    "root<enter>",
+    "<wait5>",
+    "vagrant<enter>",
+    "<wait5>",
+    "rm -f /etc/apt/sources.list.d/{pve-enterprise,ceph}.list<enter>",
+    "apt-get update<enter><wait1m>",
+    "apt-get install -y qemu-guest-agent<enter><wait30s>",
+    "systemctl start qemu-guest-agent<enter><wait>",
+  ]
+}
+
+source "proxmox-iso" "proxmox-ve-uefi-amd64" {
+  template_name            = "template-proxmox-ve-uefi"
+  template_description     = "See https://github.com/rgl/proxmox-ve"
+  insecure_skip_tls_verify = true
+  node                     = var.proxmox_node
+  machine                  = "q35"
+  bios                     = "ovmf"
+  efi_config {
+    efi_storage_pool = "local-lvm"
+  }
+  cpu_type = "host"
+  cores    = var.cpus
+  memory   = var.memory
+  vga {
+    type   = "qxl"
+    memory = 16
+  }
+  network_adapters {
+    model  = "virtio"
+    bridge = "vmbr0"
+  }
+  scsi_controller = "virtio-scsi-pci"
+  disks {
+    type         = "scsi"
+    disk_size    = "${var.disk_size}M"
+    storage_pool = "local-lvm"
+  }
+  iso_storage_pool = "local"
+  iso_url          = var.iso_url
+  iso_checksum     = var.iso_checksum
+  unmount_iso      = true
+  os               = "l26"
+  ssh_username     = "root"
+  ssh_password     = "vagrant"
+  ssh_timeout      = "60m"
+  http_directory   = "."
+  boot_wait        = "30s"
+  boot_command = [
+    "<enter>",
+    "<wait1m>",
+    "<enter><wait>",
+    "<enter><wait>",
+    "${var.step_country}<tab><wait>",
+    "${var.step_timezone}<tab><wait>",
+    "${var.step_keyboard_layout}<tab><wait>",
+    "<tab><wait>",
+    "<enter><wait5>",
+    "vagrant<tab><wait>",
+    "vagrant<tab><wait>",
+    "${var.step_email}<tab><wait>",
+    "<tab><wait>",
+    "<enter><wait5>",
+    "${var.step_hostname}<tab><wait>",
+    "<tab><wait>",
+    "<tab><wait>",
+    "<tab><wait>",
+    "<tab><wait>",
+    "<tab><wait>",
+    "<enter><wait5>",
+    "<enter><wait5>",
+    "<wait4m>",
+    "root<enter>",
+    "<wait5>",
+    "vagrant<enter>",
+    "<wait5>",
+    "rm -f /etc/apt/sources.list.d/{pve-enterprise,ceph}.list<enter>",
+    "apt-get update<enter><wait1m>",
+    "apt-get install -y qemu-guest-agent<enter><wait30s>",
+    "systemctl start qemu-guest-agent<enter><wait>",
+  ]
+}
+
 source "virtualbox-iso" "proxmox-ve-amd64" {
   guest_os_type        = "Debian_64"
   guest_additions_mode = "upload"
@@ -334,6 +485,8 @@ build {
   sources = [
     "source.qemu.proxmox-ve-amd64",
     "source.qemu.proxmox-ve-uefi-amd64",
+    "source.proxmox-iso.proxmox-ve-amd64",
+    "source.proxmox-iso.proxmox-ve-uefi-amd64",
     "source.virtualbox-iso.proxmox-ve-amd64",
     "source.hyperv-iso.proxmox-ve-amd64",
   ]
