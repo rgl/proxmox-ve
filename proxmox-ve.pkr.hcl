@@ -150,7 +150,7 @@ source "qemu" "proxmox-ve-amd64" {
   boot_wait           = "5s"
   boot_command = [
     "<enter>",
-    "<wait1m>",
+    "<wait5m>",
     "<enter><wait>",
     "<enter><wait>",
     "${var.step_country}<tab><wait>",
@@ -201,7 +201,7 @@ source "qemu" "proxmox-ve-uefi-amd64" {
   boot_wait           = "10s"
   boot_command = [
     "<enter>",
-    "<wait1m>",
+    "<wait5m>",
     "<enter><wait>",
     "<enter><wait>",
     "${var.step_country}<tab><wait>",
@@ -262,7 +262,7 @@ source "proxmox-iso" "proxmox-ve-amd64" {
   boot_wait        = "30s"
   boot_command = [
     "<enter>",
-    "<wait1m>",
+    "<wait5m>",
     "<enter><wait>",
     "<enter><wait>",
     "${var.step_country}<tab><wait>",
@@ -334,7 +334,7 @@ source "proxmox-iso" "proxmox-ve-uefi-amd64" {
   boot_wait        = "30s"
   boot_command = [
     "<enter>",
-    "<wait1m>",
+    "<wait5m>",
     "<enter><wait>",
     "<enter><wait>",
     "${var.step_country}<tab><wait>",
@@ -399,7 +399,7 @@ source "virtualbox-iso" "proxmox-ve-amd64" {
   boot_wait            = "5s"
   boot_command = [
     "<enter>",
-    "<wait1m>",
+    "<wait5m>",
     "<enter><wait>",
     "<enter><wait>",
     "${var.step_country}<tab><wait>",
@@ -447,7 +447,7 @@ source "hyperv-iso" "proxmox-ve-amd64" {
   boot_wait                        = "5s"
   boot_command = [
     "<enter>",
-    "<wait1m>",
+    "<wait5m>",
     "<enter><wait>",
     "<enter><wait>",
     "${var.step_country}<tab><wait>",

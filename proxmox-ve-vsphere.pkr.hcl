@@ -160,7 +160,7 @@ source "vsphere-iso" "proxmox-ve-amd64" {
   boot_wait           = "5s"
   boot_command = [
     "<enter>",
-    "<wait1m>",
+    "<wait5m>",
     "<enter><wait>",
     "<enter><wait>",
     "${var.step_country}<tab><wait>",
