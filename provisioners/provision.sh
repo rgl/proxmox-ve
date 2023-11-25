@@ -5,12 +5,13 @@ set -euxo pipefail
 export DEBIAN_FRONTEND=noninteractive
 
 # remove old kernel packages.
-# NB as of pve 5.2, there's a metapackage, pve-kernel-4.15, then there are the
-#    real kernels at pve-kernel-*-pve (these are the ones that are removed).
-pve_kernels=$(dpkg-query -f '${Package}\n' -W 'pve-kernel-*-pve')
-for pve_kernel in $pve_kernels; do
-    if [[ $pve_kernel != "pve-kernel-$(uname -r)" ]]; then
-        apt-get remove -y --purge $pve_kernel
+# NB as of pve 8.1, there's a metapackage, proxmox-kernel-6.5, then there are
+#    the real kernels at proxmox-kernel-*-pve-signed (these are the ones that
+#    are removed).
+proxmox_kernels=$(dpkg-query -f '${Package}\n' -W 'proxmox-kernel-*-pve-signed')
+for proxmox_kernel in $proxmox_kernels; do
+    if [[ $proxmox_kernel != "proxmox-kernel-$(uname -r)-signed" ]]; then
+        apt-get remove -y --purge $proxmox_kernel
     fi
 done
 
