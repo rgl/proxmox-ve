@@ -229,6 +229,7 @@ source "qemu" "proxmox-ve-uefi-amd64" {
 source "proxmox-iso" "proxmox-ve-amd64" {
   template_name            = "template-proxmox-ve"
   template_description     = "See https://github.com/rgl/proxmox-ve"
+  tags                     = "proxmox-ve;template"
   insecure_skip_tls_verify = true
   node                     = var.proxmox_node
   machine                  = "q35"
@@ -301,6 +302,7 @@ source "proxmox-iso" "proxmox-ve-amd64" {
 source "proxmox-iso" "proxmox-ve-uefi-amd64" {
   template_name            = "template-proxmox-ve-uefi"
   template_description     = "See https://github.com/rgl/proxmox-ve"
+  tags                     = "proxmox-ve-uefi;template"
   insecure_skip_tls_verify = true
   node                     = var.proxmox_node
   machine                  = "q35"
