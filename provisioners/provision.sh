@@ -15,6 +15,11 @@ for proxmox_kernel in $proxmox_kernels; do
     fi
 done
 
+# let the root user login.
+cat >/etc/ssh/sshd_config.d/local.conf <<'EOF'
+PermitRootLogin yes
+EOF
+
 # create a group where sudo will not ask for a password.
 apt-get install -q -y sudo
 groupadd -r admin
