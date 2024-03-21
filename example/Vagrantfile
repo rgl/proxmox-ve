@@ -18,12 +18,6 @@ Vagrant.configure('2') do |config|
     lv.machine_virtual_size = VM_ROOT_DISK_SIZE_GB
     config.vm.synced_folder '.', '/vagrant', type: 'nfs', nfs_version: '4.2', nfs_udp: false
   end
-  config.vm.provider :virtualbox do |vb|
-    vb.linked_clone = true
-    vb.memory = VM_MEMORY_GB*1024
-    vb.cpus = VM_CPU
-    vb.customize ['modifyvm', :id, '--nested-hw-virt', 'on']
-  end
   config.vm.provider :hyperv do |hv, config|
     hv.vmname = "#{File.basename(File.dirname(File.dirname(__FILE__)))}-example"
     hv.linked_clone = true

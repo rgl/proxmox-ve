@@ -12,25 +12,25 @@ After the example vagrant environment is started, you can access the [Proxmox We
 
 For a cluster example see [rgl/proxmox-ve-cluster-vagrant](https://github.com/rgl/proxmox-ve-cluster-vagrant).
 
-## libvirt/VirtualBox
+## libvirt
 
 Create the base box:
 
 ```bash
-make build-libvirt # or build-virtualbox
+make build-libvirt
 ```
 
 Add the base box as suggested in make output:
 
 ```bash
-vagrant box add -f proxmox-ve-amd64 proxmox-ve-amd64-libvirt.box # or proxmox-ve-amd64-virtualbox.box
+vagrant box add -f proxmox-ve-amd64 proxmox-ve-amd64-libvirt.box
 ```
 
 Start the example vagrant environment with:
 
 ```bash
 cd example
-vagrant up --no-destroy-on-error --provider=libvirt # or --provider=virtualbox
+vagrant up --no-destroy-on-error --provider=libvirt
 ```
 
 ## Proxmox
@@ -211,7 +211,7 @@ tied to a specific Proxmox VE version. Also take care when you decide to overrid
 Create the base box:
 
 ```bash
-make build-libvirt VAR_FILE=example.pkrvars.hcl  # or build-virtualbox or build-hyperv
+make build-libvirt VAR_FILE=example.pkrvars.hcl
 ```
 
 The following content of `example.pkrvars.hcl`:

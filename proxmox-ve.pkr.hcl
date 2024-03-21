@@ -10,11 +10,6 @@ packer {
       version = "1.1.7"
       source  = "github.com/hashicorp/proxmox"
     }
-    # see https://github.com/hashicorp/packer-plugin-virtualbox
-    virtualbox = {
-      version = "1.0.5"
-      source  = "github.com/hashicorp/virtualbox"
-    }
     # see https://github.com/hashicorp/packer-plugin-hyperv
     hyperv = {
       version = "1.1.3"
@@ -375,63 +370,6 @@ source "proxmox-iso" "proxmox-ve-uefi-amd64" {
   ]
 }
 
-source "virtualbox-iso" "proxmox-ve-amd64" {
-  guest_os_type        = "Debian_64"
-  guest_additions_mode = "upload"
-  headless             = true
-  http_directory       = "."
-  vboxmanage = [
-    ["modifyvm", "{{.Name}}", "--memory", var.memory],
-    ["modifyvm", "{{.Name}}", "--cpus", var.cpus],
-    ["modifyvm", "{{.Name}}", "--nested-hw-virt", "on"],
-    ["modifyvm", "{{.Name}}", "--vram", "16"],
-    ["modifyvm", "{{.Name}}", "--graphicscontroller", "vmsvga"],
-    ["modifyvm", "{{.Name}}", "--audio", "none"],
-    ["modifyvm", "{{.Name}}", "--nictype1", "82540EM"],
-    ["modifyvm", "{{.Name}}", "--nictype2", "82540EM"],
-    ["modifyvm", "{{.Name}}", "--nictype3", "82540EM"],
-    ["modifyvm", "{{.Name}}", "--nictype4", "82540EM"],
-  ]
-  vboxmanage_post = [
-    ["storagectl", "{{.Name}}", "--name", "IDE Controller", "--remove"],
-  ]
-  disk_size            = var.disk_size
-  hard_drive_interface = "sata"
-  hard_drive_discard   = true
-  iso_url              = var.iso_url
-  iso_checksum         = var.iso_checksum
-  output_directory     = "${var.output_base_dir}/output-{{build_name}}"
-  ssh_username         = "root"
-  ssh_password         = "vagrant"
-  ssh_timeout          = "60m"
-  boot_wait            = "5s"
-  boot_command = [
-    "<enter>",
-    "<wait5m>",
-    "<enter><wait>",
-    "<enter><wait>",
-    "${var.step_country}<tab><wait>",
-    "${var.step_timezone}<tab><wait>",
-    "${var.step_keyboard_layout}<tab><wait>",
-    "<tab><wait>",
-    "<enter><wait5>",
-    "vagrant<tab><wait>",
-    "vagrant<tab><wait>",
-    "${var.step_email}<tab><wait>",
-    "<tab><wait>",
-    "<enter><wait5>",
-    "${var.step_hostname}<tab><wait>",
-    "<tab><wait>",
-    "<tab><wait>",
-    "<tab><wait>",
-    "<tab><wait>",
-    "<tab><wait>",
-    "<enter><wait5>",
-    "<enter><wait5>",
-  ]
-  shutdown_command = "poweroff"
-}
-
 source "hyperv-iso" "proxmox-ve-amd64" {
   temp_path                        = "tmp"
   headless                         = true
@@ -495,7 +433,6 @@ build {
     "source.qemu.proxmox-ve-uefi-amd64",
     "source.proxmox-iso.proxmox-ve-amd64",
     "source.proxmox-iso.proxmox-ve-uefi-amd64",
-    "source.virtualbox-iso.proxmox-ve-amd64",
     "source.hyperv-iso.proxmox-ve-amd64",
   ]
 
@@ -512,7 +449,6 @@ build {
     only = [
       "qemu.proxmox-ve-amd64",
       "hyperv-iso.proxmox-ve-amd64",
-      "virtualbox-iso.proxmox-ve-amd64",
     ]
     output               = var.vagrant_box
     vagrantfile_template = "Vagrantfile.template"
