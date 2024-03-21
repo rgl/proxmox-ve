@@ -7,7 +7,7 @@ packer {
     }
     # see https://github.com/hashicorp/packer-plugin-proxmox
     proxmox = {
-      version = "1.1.6"
+      version = "1.1.7"
       source  = "github.com/hashicorp/proxmox"
     }
     # see https://github.com/hashicorp/packer-plugin-virtualbox
@@ -17,12 +17,12 @@ packer {
     }
     # see https://github.com/hashicorp/packer-plugin-hyperv
     hyperv = {
-      version = "1.1.2"
+      version = "1.1.3"
       source  = "github.com/hashicorp/hyperv"
     }
     # see https://github.com/hashicorp/packer-plugin-vagrant
     vagrant = {
-      version = "1.1.1"
+      version = "1.1.2"
       source  = "github.com/hashicorp/vagrant"
     }
   }
@@ -49,12 +49,12 @@ variable "disk_size" {
 
 variable "iso_url" {
   type    = string
-  default = "http://download.proxmox.com/iso/proxmox-ve_8.1-1.iso"
+  default = "http://download.proxmox.com/iso/proxmox-ve_8.1-2.iso"
 }
 
 variable "iso_checksum" {
   type    = string
-  default = "sha256:9018a17307ad50eb9bf32a805d0917d621499363ef87b0b477332ed9f9d7dcc1"
+  default = "sha256:f3e3d2a6ad8e44020a499855475a304dbb672c284410a3792826098c906c63c0"
 }
 
 variable "proxmox_node" {
