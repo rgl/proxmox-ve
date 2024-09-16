@@ -44,12 +44,12 @@ variable "disk_size" {
 
 variable "iso_url" {
   type    = string
-  default = "http://download.proxmox.com/iso/proxmox-ve_8.2-1.iso"
+  default = "http://download.proxmox.com/iso/proxmox-ve_8.2-2.iso"
 }
 
 variable "iso_checksum" {
   type    = string
-  default = "sha256:d99d182a0df4ba94c27668d3e33d14cc286d775a7bdf571a86c24ea522009e93"
+  default = "sha256:c96ad84eacbbcef299ab8f407f9602f832abb5ceb08a9aa288c1e1164df2da97"
 }
 
 variable "proxmox_node" {
