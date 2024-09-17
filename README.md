@@ -126,7 +126,9 @@ export GOVC_DATASTORE='Datastore'
 export VSPHERE_OS_ISO="[$GOVC_DATASTORE] iso/proxmox-ve_8.2-2.iso"
 export VSPHERE_ESXI_HOST='esxi.local'
 export VSPHERE_TEMPLATE_FOLDER='test/templates'
-export VSPHERE_TEMPLATE_NAME="$VSPHERE_TEMPLATE_FOLDER/proxmox-ve-amd64-vsphere"
+# NB the VSPHERE_TEMPLATE_NAME last segment MUST match the
+#    builders.vm_name property inside the packer template.
+export VSPHERE_TEMPLATE_NAME="$VSPHERE_TEMPLATE_FOLDER/proxmox-ve-amd64"
 export VSPHERE_VM_FOLDER='test'
 export VSPHERE_VM_NAME='proxmox-ve-example'
 # NB for the nested VMs to access the network, this VLAN port group security
