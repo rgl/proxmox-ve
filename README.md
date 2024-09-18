@@ -57,9 +57,10 @@ make build-proxmox
 
 ## Hyper-V
 
-Follow the [rgl/debian-vagrant Hyper-V Usage section](https://github.com/rgl/debian-vagrant#hyper-v-usage).
+Follow the [rgl/windows-vagrant Hyper-V Usage section](https://github.com/rgl/windows-vagrant#hyper-v-usage) to create the `Vagrant` vSwitch for use by the packer template and the example vagrant environment.
 
-Create a vSwitch for proxmox:
+Create the `proxmox` vSwitch for use in the example vagrant environment second
+network interface:
 
 ```bash
 PowerShell -NoLogo -NoProfile -ExecutionPolicy Bypass <<'EOF'
@@ -84,6 +85,34 @@ Set-NetFirewallProfile `
             Get-NetAdapter -name "vEthernet*" | Where-Object {$_.ifIndex}
         ).InterfaceAlias
 EOF
+```
+
+Set the Hyper-V details:
+
+```bash
+cat >secrets-hyperv.sh <<'EOF'
+# set this value when you need to set the VM Switch Name.
+export HYPERV_SWITCH_NAME='Vagrant'
+
+# set this value when you need to set the VM VLAN ID.
+unset HYPERV_VLAN_ID
+#export HYPERV_VLAN_ID=''
+
+# set the credentials that the guest will use
+# to connect to this host smb share.
+# NB you should create a new local user named _vagrant_share
+#    and use that one here instead of your user credentials.
+# NB it would be nice for this user to have its credentials
+#    automatically rotated, if you implement that feature,
+#    let me known!
+export VAGRANT_SMB_USERNAME='_vagrant_share'
+export VAGRANT_SMB_PASSWORD=''
+
+# remove the virtual switch from the windows firewall.
+# NB execute if the VM fails to obtain an IP address from DHCP.
+PowerShell -Command 'Set-NetFirewallProfile -DisabledInterfaceAliases (Get-NetAdapter -name "vEthernet*" | Where-Object {$_.ifIndex}).InterfaceAlias'
+EOF
+source secrets-hyperv.sh
 ```
 
 Create the base box:
