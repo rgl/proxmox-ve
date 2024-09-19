@@ -1,0 +1,16 @@
+# see https://pve.proxmox.com/wiki/Automated_Installation
+
+[global]
+keyboard = "en-us"
+country = "us"
+timezone = "America/New_York"
+fqdn = "pve.example.com"
+mailto = "pve@example.com"
+root_password = "vagrant"
+
+[network]
+source = "from-dhcp"
+
+[disk-setup]
+disk_list = ["sda"]
+filesystem = "ext4"

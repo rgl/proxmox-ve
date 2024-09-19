@@ -82,31 +82,6 @@ variable "output_base_dir" {
   default = env("PACKER_OUTPUT_BASE_DIR")
 }
 
-variable "step_country" {
-  type    = string
-  default = "United S<wait>t<wait>a<wait>t<wait>e<wait>s<wait><enter><wait>"
-}
-
-variable "step_email" {
-  type    = string
-  default = "pve@example.com"
-}
-
-variable "step_hostname" {
-  type    = string
-  default = "pve.example.com"
-}
-
-variable "step_keyboard_layout" {
-  type    = string
-  default = ""
-}
-
-variable "step_timezone" {
-  type    = string
-  default = ""
-}
-
 variable "shell_provisioner_scripts" {
   type = list(string)
   default = [
@@ -130,7 +105,6 @@ source "qemu" "proxmox-ve-amd64" {
   headless            = true
   use_default_display = false
   net_device          = "virtio-net"
-  http_directory      = "."
   format              = "qcow2"
   disk_size           = var.disk_size
   disk_interface      = "virtio-scsi"
@@ -142,30 +116,18 @@ source "qemu" "proxmox-ve-amd64" {
   ssh_username        = "root"
   ssh_password        = "vagrant"
   ssh_timeout         = "60m"
+  cd_label            = "proxmox-ais"
+  cd_files            = ["answer.toml"]
   boot_wait           = "5s"
   boot_command = [
-    "<enter>",
-    "<wait5m>",
-    "<enter><wait>",
-    "<enter><wait>",
-    "${var.step_country}<tab><wait>",
-    "${var.step_timezone}<tab><wait>",
-    "${var.step_keyboard_layout}<tab><wait>",
-    "<tab><wait>",
-    "<enter><wait5>",
-    "vagrant<tab><wait>",
-    "vagrant<tab><wait>",
-    "${var.step_email}<tab><wait>",
-    "<tab><wait>",
-    "<enter><wait5>",
-    "${var.step_hostname}<tab><wait>",
-    "<tab><wait>",
-    "<tab><wait>",
-    "<tab><wait>",
-    "<tab><wait>",
-    "<tab><wait>",
-    "<enter><wait5>",
-    "<enter><wait5>",
+    # select Advanced Options.
+    "<end><enter>",
+    # select Install Proxmox VE (Automated).
+    "<down><down><down><enter>",
+    # wait for the shell prompt.
+    "<wait1m>",
+    # do the installation.
+    "proxmox-fetch-answer partition >/run/automatic-installer-answers<enter><wait>exit<enter>",
   ]
   shutdown_command = "poweroff"
 }
@@ -182,7 +144,6 @@ source "qemu" "proxmox-ve-uefi-amd64" {
   headless            = true
   use_default_display = false
   net_device          = "virtio-net"
-  http_directory      = "."
   format              = "qcow2"
   disk_size           = var.disk_size
   disk_interface      = "virtio-scsi"
@@ -193,30 +154,18 @@ source "qemu" "proxmox-ve-uefi-amd64" {
   ssh_username        = "root"
   ssh_password        = "vagrant"
   ssh_timeout         = "60m"
+  cd_label            = "proxmox-ais"
+  cd_files            = ["answer.toml"]
   boot_wait           = "10s"
   boot_command = [
-    "<enter>",
-    "<wait5m>",
-    "<enter><wait>",
-    "<enter><wait>",
-    "${var.step_country}<tab><wait>",
-    "${var.step_timezone}<tab><wait>",
-    "${var.step_keyboard_layout}<tab><wait>",
-    "<tab><wait>",
-    "<enter><wait5>",
-    "vagrant<tab><wait>",
-    "vagrant<tab><wait>",
-    "${var.step_email}<tab><wait>",
-    "<tab><wait>",
-    "<enter><wait5>",
-    "${var.step_hostname}<tab><wait>",
-    "<tab><wait>",
-    "<tab><wait>",
-    "<tab><wait>",
-    "<tab><wait>",
-    "<tab><wait>",
-    "<enter><wait5>",
-    "<enter><wait5>",
+    # select Advanced Options.
+    "<end><enter>",
+    # select Install Proxmox VE (Automated).
+    "<down><down><down><enter>",
+    # wait for the shell prompt.
+    "<wait1m>",
+    # do the installation.
+    "proxmox-fetch-answer partition >/run/automatic-installer-answers<enter><wait>exit<enter>",
   ]
   shutdown_command = "poweroff"
 }
@@ -253,40 +202,31 @@ source "proxmox-iso" "proxmox-ve-amd64" {
   iso_url          = var.iso_url
   iso_checksum     = var.iso_checksum
   unmount_iso      = true
-  os               = "l26"
-  ssh_username     = "root"
-  ssh_password     = "vagrant"
-  ssh_timeout      = "60m"
-  http_directory   = "."
-  boot_wait        = "30s"
+  additional_iso_files {
+    cd_label         = "proxmox-ais"
+    cd_files         = ["answer.toml"]
+    unmount          = true
+    iso_storage_pool = "local"
+  }
+  os           = "l26"
+  ssh_username = "root"
+  ssh_password = "vagrant"
+  ssh_timeout  = "60m"
+  boot_wait    = "30s"
   boot_command = [
-    "<enter>",
-    "<wait5m>",
-    "<enter><wait>",
-    "<enter><wait>",
-    "${var.step_country}<tab><wait>",
-    "${var.step_timezone}<tab><wait>",
-    "${var.step_keyboard_layout}<tab><wait>",
-    "<tab><wait>",
-    "<enter><wait5>",
-    "vagrant<tab><wait>",
-    "vagrant<tab><wait>",
-    "${var.step_email}<tab><wait>",
-    "<tab><wait>",
-    "<enter><wait5>",
-    "${var.step_hostname}<tab><wait>",
-    "<tab><wait>",
-    "<tab><wait>",
-    "<tab><wait>",
-    "<tab><wait>",
-    "<tab><wait>",
-    "<enter><wait5>",
-    "<enter><wait5>",
+    # select Advanced Options.
+    "<end><enter>",
+    # select Install Proxmox VE (Automated).
+    "<down><down><down><enter>",
+    # wait for the shell prompt.
+    "<wait1m>",
+    # do the installation.
+    "proxmox-fetch-answer partition >/run/automatic-installer-answers<enter><wait>exit<enter>",
+    # wait for the installation to finish.
     "<wait4m>",
-    "root<enter>",
-    "<wait5>",
-    "vagrant<enter>",
-    "<wait5>",
+    # login.
+    "root<enter><wait5s>vagrant<enter><wait5s>",
+    # install the guest agent.
     "rm -f /etc/apt/sources.list.d/{pve-enterprise,ceph}.list<enter>",
     "apt-get update<enter><wait1m>",
     "apt-get install -y qemu-guest-agent<enter><wait30s>",
@@ -329,40 +269,31 @@ source "proxmox-iso" "proxmox-ve-uefi-amd64" {
   iso_url          = var.iso_url
   iso_checksum     = var.iso_checksum
   unmount_iso      = true
-  os               = "l26"
-  ssh_username     = "root"
-  ssh_password     = "vagrant"
-  ssh_timeout      = "60m"
-  http_directory   = "."
-  boot_wait        = "30s"
+  additional_iso_files {
+    iso_storage_pool = "local"
+    cd_label         = "proxmox-ais"
+    cd_files         = ["answer.toml"]
+    unmount          = true
+  }
+  os           = "l26"
+  ssh_username = "root"
+  ssh_password = "vagrant"
+  ssh_timeout  = "60m"
+  boot_wait    = "30s"
   boot_command = [
-    "<enter>",
-    "<wait5m>",
-    "<enter><wait>",
-    "<enter><wait>",
-    "${var.step_country}<tab><wait>",
-    "${var.step_timezone}<tab><wait>",
-    "${var.step_keyboard_layout}<tab><wait>",
-    "<tab><wait>",
-    "<enter><wait5>",
-    "vagrant<tab><wait>",
-    "vagrant<tab><wait>",
-    "${var.step_email}<tab><wait>",
-    "<tab><wait>",
-    "<enter><wait5>",
-    "${var.step_hostname}<tab><wait>",
-    "<tab><wait>",
-    "<tab><wait>",
-    "<tab><wait>",
-    "<tab><wait>",
-    "<tab><wait>",
-    "<enter><wait5>",
-    "<enter><wait5>",
+    # select Advanced Options.
+    "<end><enter>",
+    # select Install Proxmox VE (Automated).
+    "<down><down><down><enter>",
+    # wait for the shell prompt.
+    "<wait1m>",
+    # do the installation.
+    "proxmox-fetch-answer partition >/run/automatic-installer-answers<enter><wait>exit<enter>",
+    # wait for the installation to finish.
     "<wait4m>",
-    "root<enter>",
-    "<wait5>",
-    "vagrant<enter>",
-    "<wait5>",
+    # login.
+    "root<enter><wait5s>vagrant<enter><wait5s>",
+    # install the guest agent.
     "rm -f /etc/apt/sources.list.d/{pve-enterprise,ceph}.list<enter>",
     "apt-get update<enter><wait1m>",
     "apt-get install -y qemu-guest-agent<enter><wait30s>",
@@ -373,7 +304,6 @@ source "proxmox-iso" "proxmox-ve-uefi-amd64" {
 source "hyperv-iso" "proxmox-ve-amd64" {
   temp_path                        = "tmp"
   headless                         = true
-  http_directory                   = "."
   generation                       = 2
   enable_virtualization_extensions = true
   enable_mac_spoofing              = true
@@ -390,39 +320,26 @@ source "hyperv-iso" "proxmox-ve-amd64" {
   ssh_timeout                      = "60m"
   first_boot_device                = "DVD"
   boot_order                       = ["SCSI:0:0"]
+  cd_label                         = "proxmox-ais"
+  cd_files                         = ["answer.toml"]
   boot_wait                        = "5s"
   boot_command = [
-    "<enter>",
-    "<wait5m>",
-    "<enter><wait>",
-    "<enter><wait>",
-    "${var.step_country}<tab><wait>",
-    "${var.step_timezone}<tab><wait>",
-    "${var.step_keyboard_layout}<tab><wait>",
-    "<tab><wait>",
-    "<enter><wait5>",
-    "vagrant<tab><wait>",
-    "vagrant<tab><wait>",
-    "${var.step_email}<tab><wait>",
-    "<tab><wait>",
-    "<enter><wait5>",
-    "${var.step_hostname}<tab><wait>",
-    "<tab><wait>",
-    "<tab><wait>",
-    "<tab><wait>",
-    "<tab><wait>",
-    "<tab><wait>",
-    "<enter><wait5>",
-    "<enter><wait5>",
-    "<wait4m>",
-    "root<enter>",
-    "<wait5>",
-    "vagrant<enter>",
-    "<wait5>",
-    "rm -f /etc/apt/sources.list.d/pve-enterprise.list<enter>",
-    "apt-get update<enter>",
+    # select Advanced Options.
+    "<end><enter>",
+    # select Install Proxmox VE (Automated).
+    "<down><down><down><enter>",
+    # wait for the shell prompt.
     "<wait1m>",
-    "apt-get install -y hyperv-daemons<enter>",
+    # do the installation.
+    "proxmox-fetch-answer partition >/run/automatic-installer-answers<enter><wait>exit<enter>",
+    # wait for the installation to finish.
+    "<wait4m>",
+    # login.
+    "root<enter><wait5s>vagrant<enter><wait5s>",
+    # install the guest agent.
+    "rm -f /etc/apt/sources.list.d/{pve-enterprise,ceph}.list<enter>",
+    "apt-get update<enter><wait1m>",
+    "apt-get install -y hyperv-daemons<enter><wait30s>",
   ]
   shutdown_command = "poweroff"
 }

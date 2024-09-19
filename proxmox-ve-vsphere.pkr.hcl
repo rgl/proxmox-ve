@@ -88,31 +88,6 @@ variable "apt_cache_port" {
   default = env("APT_CACHE_PORT")
 }
 
-variable "step_country" {
-  type    = string
-  default = "United S<wait>t<wait>a<wait>t<wait>e<wait>s<wait><enter><wait>"
-}
-
-variable "step_email" {
-  type    = string
-  default = "pve@example.com"
-}
-
-variable "step_hostname" {
-  type    = string
-  default = "pve.example.com"
-}
-
-variable "step_keyboard_layout" {
-  type    = string
-  default = ""
-}
-
-variable "step_timezone" {
-  type    = string
-  default = ""
-}
-
 variable "shell_provisioner_scripts" {
   type = list(string)
   default = [
@@ -127,7 +102,6 @@ variable "shell_provisioner_scripts" {
 
 source "vsphere-iso" "proxmox-ve-amd64" {
   vm_name        = "proxmox-ve-amd64"
-  http_directory = "."
   guest_os_type  = "debian12_64Guest"
   NestedHV       = true
   CPUs           = var.cpus
@@ -157,35 +131,25 @@ source "vsphere-iso" "proxmox-ve-amd64" {
   ssh_username        = "root"
   ssh_password        = "vagrant"
   ssh_timeout         = "60m"
+  cd_label            = "proxmox-ais"
+  cd_files            = ["answer.toml"]
   boot_wait           = "5s"
   boot_command = [
-    "<enter>",
-    "<wait5m>",
-    "<enter><wait>",
-    "<enter><wait>",
-    "${var.step_country}<tab><wait>",
-    "${var.step_timezone}<tab><wait>",
-    "${var.step_keyboard_layout}<tab><wait>",
-    "<tab><wait>",
-    "<enter><wait5>",
-    "vagrant<tab><wait>",
-    "vagrant<tab><wait>",
-    "${var.step_email}<tab><wait>",
-    "<tab><wait>",
-    "<enter><wait5>",
-    "${var.step_hostname}<tab><wait>",
-    "<tab><wait>",
-    "<tab><wait>",
-    "<tab><wait>",
-    "<tab><wait>",
-    "<tab><wait>",
-    "<enter><wait5>",
-    "<enter><wait5>",
-    "<wait10m>",
-    "root<enter>vagrant<enter><wait5s>",
-    "apt-get update<enter><wait15s>",
-    "apt-get install -y open-vm-tools<enter><wait1m>",
-    "exit<enter>",
+    # select Advanced Options.
+    "<end><enter>",
+    # select Install Proxmox VE (Automated).
+    "<down><down><down><enter>",
+    # wait for the shell prompt.
+    "<wait1m>",
+    # do the installation.
+    "proxmox-fetch-answer partition >/run/automatic-installer-answers<enter><wait>exit<enter>",
+    # wait for the installation to finish.
+    "<wait4m>",
+    # login.
+    "root<enter><wait5s>vagrant<enter><wait5s>",
+    # install the guest agent.
+    "apt-get update<enter><wait1m>",
+    "apt-get install -y open-vm-tools<enter><wait30s>",
   ]
   shutdown_command = "poweroff"
 }

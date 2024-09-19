@@ -237,7 +237,7 @@ Remember to also define `PACKER_OUTPUT_BASE_DIR` when you run `make clean` after
 Some properties of the virtual machine and the Proxmox VE installation can be overridden.
 Take a look at `proxmox-ve.pkr.hcl`, `variable` blocks, to get an idea which values can be
 overridden. Do not override `iso_url` and `iso_checksum` as the `boot_command`s might be
-tied to a specific Proxmox VE version. Also take care when you decide to override `country`.
+tied to a specific Proxmox VE version.
 
 Create the base box:
 
@@ -250,10 +250,6 @@ The following content of `example.pkrvars.hcl`:
 * sets the initial disk size to 128 GB
 * sets the initial memory to 4 GB
 * sets the Packer output base directory to /dev/shm
-* sets the country to Germany (timezone is updated by Proxmox VE installer) and changes
-  the keyboard layout back to "U.S. English" as this is needed for the subsequent
-  `boot_command` statements
-* sets the hostname to pve-test.example.local
 * uses all default shell provisioners (see [`./provisioners`](./provisioners)) and a
   custom one for german localisation
 
@@ -261,9 +257,6 @@ The following content of `example.pkrvars.hcl`:
 disk_size = 128 * 1024
 memory = 4 * 1024
 output_base_dir = "/dev/shm"
-step_country = "Ger<wait>m<wait>a<wait>n<wait><enter>"
-step_hostname = "pve-test.example.local"
-step_keyboard_layout = "<end><up><wait>"
 shell_provisioner_scripts = [
   "provisioners/apt_proxy.sh",
   "provisioners/upgrade.sh",
@@ -276,34 +269,11 @@ shell_provisioner_scripts = [
 
 # Packer boot_command
 
-As Proxmox does not have any way to be pre-seeded, this environment has to answer all the
-installer questions through the packer `boot_command` interface. This is quite fragile, so
-be aware when you change anything. The following table describes the current steps and
-corresponding answers.
+The Proxmox installation is [automatically configured](https://pve.proxmox.com/wiki/Automated_Installation) using the [`answer.toml` file](answer.toml), but to trigger the automatic installation, this environment has to nudge the default Proxmox installation ISO to use the [`answer.toml` file](answer.toml) through the packer `boot_command` interface. This is quite fragile, so be aware when you change anything. The following table describes the current steps and corresponding answers.
 
-| step                              | boot_command                                          |
-|----------------------------------:|-------------------------------------------------------|
-| select "Install Proxmox VE"       | `<enter>`                                             |
-| wait for boot                     | `<wait1m>`                                            |
-| agree license                     | `<enter><wait>`                                       |
-| target disk                       | `<enter><wait>`                                       |
-| type country                      | `United States<wait><enter><wait><tab><wait>`         |
-| timezone                          | `<tab><wait>`                                         |
-| keyboard layout                   | `<tab><wait>`                                         |
-| advance to the next button        | `<tab><wait>`                                         |
-| advance to the next page          | `<enter><wait5>`                                      |
-| password                          | `vagrant<tab><wait>`                                  |
-| confirm password                  | `vagrant<tab><wait>`                                  |
-| email                             | `pve@example.com<tab><wait>`                          |
-| advance to the next button        | `<tab><wait>`                                         |
-| advance to the next page          | `<enter><wait5>`                                      |
-| hostname                          | `pve.example.com<tab><wait>`                          |
-| ip address                        | `<tab><wait>`                                         |
-| netmask                           | `<tab><wait>`                                         |
-| gateway                           | `<tab><wait>`                                         |
-| DNS server                        | `<tab><wait>`                                         |
-| advance to the next button        | `<tab><wait>`                                         |
-| advance to the next page          | `<enter><wait5>`                                      |
-| install                           | `<enter><wait5>`                                      |
-
-**NB** Do not change the keyboard layout. If you do, the email address will fail to be typed.
+| step                                    | boot_command                                                                               |
+|----------------------------------------:|--------------------------------------------------------------------------------------------|
+| select "Advanced Options"               | `<end><enter>`                                                                             |
+| select "Install Proxmox VE (Automated)" | `<down><down><down><enter>`                                                                |
+| wait for the shell prompt               | `<wait1m>`                                                                                 |
+| do the installation                     | `proxmox-fetch-answer partition >/run/automatic-installer-answers<enter><wait>exit<enter>` |
