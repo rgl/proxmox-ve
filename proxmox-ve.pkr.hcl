@@ -44,12 +44,12 @@ variable "disk_size" {
 
 variable "iso_url" {
   type    = string
-  default = "http://download.proxmox.com/iso/proxmox-ve_8.2-2.iso"
+  default = "http://download.proxmox.com/iso/proxmox-ve_8.3-1.iso"
 }
 
 variable "iso_checksum" {
   type    = string
-  default = "sha256:c96ad84eacbbcef299ab8f407f9602f832abb5ceb08a9aa288c1e1164df2da97"
+  default = "sha256:b5c2d10d6492d2d763e648bc8562d0f77a90c39fac3a664e676e795735198b45"
 }
 
 variable "proxmox_node" {
@@ -127,7 +127,7 @@ source "qemu" "proxmox-ve-amd64" {
     # wait for the shell prompt.
     "<wait1m>",
     # do the installation.
-    "proxmox-fetch-answer partition >/run/automatic-installer-answers<enter><wait>exit<enter>",
+    "proxmox-fetch-answer partition proxmox-ais >/run/automatic-installer-answers<enter><wait>exit<enter>",
   ]
   shutdown_command = "poweroff"
 }
@@ -165,7 +165,7 @@ source "qemu" "proxmox-ve-uefi-amd64" {
     # wait for the shell prompt.
     "<wait1m>",
     # do the installation.
-    "proxmox-fetch-answer partition >/run/automatic-installer-answers<enter><wait>exit<enter>",
+    "proxmox-fetch-answer partition proxmox-ais >/run/automatic-installer-answers<enter><wait>exit<enter>",
   ]
   shutdown_command = "poweroff"
 }
@@ -227,7 +227,7 @@ source "proxmox-iso" "proxmox-ve-amd64" {
     # wait for the shell prompt.
     "<wait1m>",
     # do the installation.
-    "proxmox-fetch-answer partition >/run/automatic-installer-answers<enter><wait>exit<enter>",
+    "proxmox-fetch-answer partition proxmox-ais >/run/automatic-installer-answers<enter><wait>exit<enter>",
     # wait for the installation to finish.
     "<wait4m>",
     # login.
@@ -300,7 +300,7 @@ source "proxmox-iso" "proxmox-ve-uefi-amd64" {
     # wait for the shell prompt.
     "<wait1m>",
     # do the installation.
-    "proxmox-fetch-answer partition >/run/automatic-installer-answers<enter><wait>exit<enter>",
+    "proxmox-fetch-answer partition proxmox-ais >/run/automatic-installer-answers<enter><wait>exit<enter>",
     # wait for the installation to finish.
     "<wait4m>",
     # login.
@@ -343,7 +343,7 @@ source "hyperv-iso" "proxmox-ve-amd64" {
     # wait for the shell prompt.
     "<wait1m>",
     # do the installation.
-    "proxmox-fetch-answer partition >/run/automatic-installer-answers<enter><wait>exit<enter>",
+    "proxmox-fetch-answer partition proxmox-ais >/run/automatic-installer-answers<enter><wait>exit<enter>",
     # wait for the installation to finish.
     "<wait4m>",
     # login.
