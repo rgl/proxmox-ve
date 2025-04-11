@@ -6,7 +6,7 @@ country = "us"
 timezone = "America/New_York"
 fqdn = "pve.example.com"
 mailto = "pve@example.com"
-root_password = "vagrant"
+root_password = "password"
 
 [network]
 source = "from-dhcp"

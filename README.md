@@ -8,7 +8,7 @@ Create the base box as described in the section corresponding to your provider.
 
 If you want to troubleshoot the packer execution see the `.log` file that is created in the current directory.
 
-After the example vagrant environment is started, you can access the [Proxmox Web Interface](https://10.10.10.2:8006/) with the default `root` user and password `vagrant`.
+After the example vagrant environment is started, you can access the [Proxmox Web Interface](https://10.10.10.2:8006/) with the default `root` user and password `password`.
 
 For a cluster example see [rgl/proxmox-ve-cluster-vagrant](https://github.com/rgl/proxmox-ve-cluster-vagrant).
 
@@ -41,7 +41,7 @@ Set the Proxmox VE details:
 cat >secrets-proxmox.sh <<EOF
 export PROXMOX_URL='https://192.168.1.21:8006/api2/json'
 export PROXMOX_USERNAME='root@pam'
-export PROXMOX_PASSWORD='vagrant'
+export PROXMOX_PASSWORD='password'
 export PROXMOX_NODE='pve'
 EOF
 source secrets-proxmox.sh
@@ -152,7 +152,7 @@ export GOVC_PASSWORD='password'
 export GOVC_DATACENTER='Datacenter'
 export GOVC_CLUSTER='Cluster'
 export GOVC_DATASTORE='Datastore'
-export VSPHERE_OS_ISO="[$GOVC_DATASTORE] iso/proxmox-ve_8.3-1.iso"
+export VSPHERE_OS_ISO="[$GOVC_DATASTORE] iso/proxmox-ve_8.4-1.iso"
 export VSPHERE_ESXI_HOST='esxi.local'
 export VSPHERE_TEMPLATE_FOLDER='test/templates'
 # NB the VSPHERE_TEMPLATE_NAME last segment MUST match the

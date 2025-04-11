@@ -44,12 +44,12 @@ variable "disk_size" {
 
 variable "iso_url" {
   type    = string
-  default = "http://download.proxmox.com/iso/proxmox-ve_8.3-1.iso"
+  default = "http://download.proxmox.com/iso/proxmox-ve_8.4-1.iso"
 }
 
 variable "iso_checksum" {
   type    = string
-  default = "sha256:b5c2d10d6492d2d763e648bc8562d0f77a90c39fac3a664e676e795735198b45"
+  default = "sha256:d237d70ca48a9f6eb47f95fd4fd337722c3f69f8106393844d027d28c26523d8"
 }
 
 variable "proxmox_node" {
@@ -114,7 +114,7 @@ source "qemu" "proxmox-ve-amd64" {
   iso_checksum        = var.iso_checksum
   output_directory    = "${var.output_base_dir}/output-{{build_name}}"
   ssh_username        = "root"
-  ssh_password        = "vagrant"
+  ssh_password        = "password"
   ssh_timeout         = "60m"
   cd_label            = "proxmox-ais"
   cd_files            = ["answer.toml"]
@@ -152,7 +152,7 @@ source "qemu" "proxmox-ve-uefi-amd64" {
   iso_url             = var.iso_url
   iso_checksum        = var.iso_checksum
   ssh_username        = "root"
-  ssh_password        = "vagrant"
+  ssh_password        = "password"
   ssh_timeout         = "60m"
   cd_label            = "proxmox-ais"
   cd_files            = ["answer.toml"]
@@ -216,7 +216,7 @@ source "proxmox-iso" "proxmox-ve-amd64" {
   }
   os           = "l26"
   ssh_username = "root"
-  ssh_password = "vagrant"
+  ssh_password = "password"
   ssh_timeout  = "60m"
   boot_wait    = "30s"
   boot_command = [
@@ -231,7 +231,7 @@ source "proxmox-iso" "proxmox-ve-amd64" {
     # wait for the installation to finish.
     "<wait4m>",
     # login.
-    "root<enter><wait5s>vagrant<enter><wait5s>",
+    "root<enter><wait5s>password<enter><wait5s>",
     # install the guest agent.
     "rm -f /etc/apt/sources.list.d/{pve-enterprise,ceph}.list<enter>",
     "apt-get update<enter><wait1m>",
@@ -289,7 +289,7 @@ source "proxmox-iso" "proxmox-ve-uefi-amd64" {
   }
   os           = "l26"
   ssh_username = "root"
-  ssh_password = "vagrant"
+  ssh_password = "password"
   ssh_timeout  = "60m"
   boot_wait    = "30s"
   boot_command = [
@@ -304,7 +304,7 @@ source "proxmox-iso" "proxmox-ve-uefi-amd64" {
     # wait for the installation to finish.
     "<wait4m>",
     # login.
-    "root<enter><wait5s>vagrant<enter><wait5s>",
+    "root<enter><wait5s>password<enter><wait5s>",
     # install the guest agent.
     "rm -f /etc/apt/sources.list.d/{pve-enterprise,ceph}.list<enter>",
     "apt-get update<enter><wait1m>",
@@ -328,7 +328,7 @@ source "hyperv-iso" "proxmox-ve-amd64" {
   iso_checksum                     = var.iso_checksum
   output_directory                 = "${var.output_base_dir}/output-{{build_name}}"
   ssh_username                     = "root"
-  ssh_password                     = "vagrant"
+  ssh_password                     = "password"
   ssh_timeout                      = "60m"
   first_boot_device                = "DVD"
   boot_order                       = ["SCSI:0:0"]
@@ -347,7 +347,7 @@ source "hyperv-iso" "proxmox-ve-amd64" {
     # wait for the installation to finish.
     "<wait4m>",
     # login.
-    "root<enter><wait5s>vagrant<enter><wait5s>",
+    "root<enter><wait5s>password<enter><wait5s>",
     # install the guest agent.
     "rm -f /etc/apt/sources.list.d/{pve-enterprise,ceph}.list<enter>",
     "apt-get update<enter><wait1m>",

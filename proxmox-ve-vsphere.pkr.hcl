@@ -129,7 +129,7 @@ source "vsphere-iso" "proxmox-ve-amd64" {
   }
   convert_to_template = true
   ssh_username        = "root"
-  ssh_password        = "vagrant"
+  ssh_password        = "password"
   ssh_timeout         = "60m"
   cd_label            = "proxmox-ais"
   cd_files            = ["answer.toml"]
@@ -146,7 +146,7 @@ source "vsphere-iso" "proxmox-ve-amd64" {
     # wait for the installation to finish.
     "<wait4m>",
     # login.
-    "root<enter><wait5s>vagrant<enter><wait5s>",
+    "root<enter><wait5s>password<enter><wait5s>",
     # install the guest agent.
     "apt-get update<enter><wait1m>",
     "apt-get install -y open-vm-tools<enter><wait30s>",
