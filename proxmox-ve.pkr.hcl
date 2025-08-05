@@ -44,12 +44,12 @@ variable "disk_size" {
 
 variable "iso_url" {
   type    = string
-  default = "http://download.proxmox.com/iso/proxmox-ve_8.4-1.iso"
+  default = "http://download.proxmox.com/iso/proxmox-ve_9.0-1.iso"
 }
 
 variable "iso_checksum" {
   type    = string
-  default = "sha256:d237d70ca48a9f6eb47f95fd4fd337722c3f69f8106393844d027d28c26523d8"
+  default = "sha256:228f948ae696f2448460443f4b619157cab78ee69802acc0d06761ebd4f51c3e"
 }
 
 variable "proxmox_node" {
@@ -233,7 +233,7 @@ source "proxmox-iso" "proxmox-ve-amd64" {
     # login.
     "root<enter><wait5s>password<enter><wait5s>",
     # install the guest agent.
-    "rm -f /etc/apt/sources.list.d/{pve-enterprise,ceph}.list<enter>",
+    "rm -f /etc/apt/sources.list.d/{pve-enterprise,ceph}.sources<enter>",
     "apt-get update<enter><wait1m>",
     "apt-get install -y qemu-guest-agent<enter><wait30s>",
     "systemctl start qemu-guest-agent<enter><wait>",
@@ -306,7 +306,7 @@ source "proxmox-iso" "proxmox-ve-uefi-amd64" {
     # login.
     "root<enter><wait5s>password<enter><wait5s>",
     # install the guest agent.
-    "rm -f /etc/apt/sources.list.d/{pve-enterprise,ceph}.list<enter>",
+    "rm -f /etc/apt/sources.list.d/{pve-enterprise,ceph}.sources<enter>",
     "apt-get update<enter><wait1m>",
     "apt-get install -y qemu-guest-agent<enter><wait30s>",
     "systemctl start qemu-guest-agent<enter><wait>",
@@ -349,7 +349,7 @@ source "hyperv-iso" "proxmox-ve-amd64" {
     # login.
     "root<enter><wait5s>password<enter><wait5s>",
     # install the guest agent.
-    "rm -f /etc/apt/sources.list.d/{pve-enterprise,ceph}.list<enter>",
+    "rm -f /etc/apt/sources.list.d/{pve-enterprise,ceph}.sources<enter>",
     "apt-get update<enter><wait1m>",
     "apt-get install -y hyperv-daemons<enter><wait30s>",
   ]
