@@ -152,7 +152,7 @@ export GOVC_PASSWORD='password'
 export GOVC_DATACENTER='Datacenter'
 export GOVC_CLUSTER='Cluster'
 export GOVC_DATASTORE='Datastore'
-export VSPHERE_OS_ISO="[$GOVC_DATASTORE] iso/proxmox-ve_9.0-1.iso"
+export VSPHERE_OS_ISO="[$GOVC_DATASTORE] iso/proxmox-ve_9.1-1.iso"
 export VSPHERE_ESXI_HOST='esxi.local'
 export VSPHERE_TEMPLATE_FOLDER='test/templates'
 # NB the VSPHERE_TEMPLATE_NAME last segment MUST match the
