@@ -17,7 +17,7 @@ packer {
     }
     # see https://github.com/hashicorp/packer-plugin-vagrant
     vagrant = {
-      version = "1.1.5"
+      version = "1.1.6"
       source  = "github.com/hashicorp/vagrant"
     }
   }
