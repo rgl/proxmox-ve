@@ -1,9 +1,9 @@
 packer {
   required_plugins {
-    # see https://github.com/hashicorp/packer-plugin-vsphere
+    # see https://github.com/vmware/packer-plugin-vsphere
     vsphere = {
       version = "2.0.0"
-      source  = "github.com/hashicorp/vsphere"
+      source  = "github.com/vmware/vsphere"
     }
   }
 }
