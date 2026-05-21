@@ -17,7 +17,7 @@ Signed-By: /usr/share/keyrings/proxmox-archive-keyring.gpg
 EOF
 cat >/etc/apt/sources.list.d/ceph.sources <<EOF
 Types: deb
-URIs: http://download.proxmox.com/debian/ceph-squid
+URIs: http://download.proxmox.com/debian/ceph-tentacle
 Suites: $(. /etc/os-release && echo "$VERSION_CODENAME")
 Components: no-subscription
 Signed-By: /usr/share/keyrings/proxmox-archive-keyring.gpg

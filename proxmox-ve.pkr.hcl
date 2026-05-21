@@ -44,12 +44,12 @@ variable "disk_size" {
 
 variable "iso_url" {
   type    = string
-  default = "http://download.proxmox.com/iso/proxmox-ve_9.1-1.iso"
+  default = "http://download.proxmox.com/iso/proxmox-ve_9.2-1.iso"
 }
 
 variable "iso_checksum" {
   type    = string
-  default = "sha256:6d8f5afc78c0c66812d7272cde7c8b98be7eb54401ceb045400db05eb5ae6d22"
+  default = "sha256:4e88fe416df9b527624a175f24c9aa07c714d3332afb1ee3dbf3879573ef2c6c"
 }
 
 variable "proxmox_node" {
@@ -123,7 +123,7 @@ source "qemu" "proxmox-ve-amd64" {
     # select Advanced Options.
     "<end><enter>",
     # select Install Proxmox VE (Automated).
-    "<down><down><down><enter>",
+    "<down><down><down><down><down><enter>",
     # wait for the shell prompt.
     "<wait1m>",
     # do the installation.
@@ -163,7 +163,7 @@ source "qemu" "proxmox-ve-uefi-amd64" {
     # select Advanced Options.
     "<end><enter>",
     # select Install Proxmox VE (Automated).
-    "<down><down><down><enter>",
+    "<down><down><down><down><down><enter>",
     # wait for the shell prompt.
     "<wait1m>",
     # do the installation.
@@ -225,7 +225,7 @@ source "proxmox-iso" "proxmox-ve-amd64" {
     # select Advanced Options.
     "<end><enter>",
     # select Install Proxmox VE (Automated).
-    "<down><down><down><enter>",
+    "<down><down><down><down><down><enter>",
     # wait for the shell prompt.
     "<wait1m>",
     # do the installation.
@@ -298,7 +298,7 @@ source "proxmox-iso" "proxmox-ve-uefi-amd64" {
     # select Advanced Options.
     "<end><enter>",
     # select Install Proxmox VE (Automated).
-    "<down><down><down><enter>",
+    "<down><down><down><down><down><enter>",
     # wait for the shell prompt.
     "<wait1m>",
     # do the installation.
@@ -341,7 +341,7 @@ source "hyperv-iso" "proxmox-ve-amd64" {
     # select Advanced Options.
     "<end><enter>",
     # select Install Proxmox VE (Automated).
-    "<down><down><down><enter>",
+    "<down><down><down><down><down><enter>",
     # wait for the shell prompt.
     "<wait1m>",
     # do the installation.

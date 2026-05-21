@@ -138,7 +138,7 @@ source "vsphere-iso" "proxmox-ve-amd64" {
     # select Advanced Options.
     "<end><enter>",
     # select Install Proxmox VE (Automated).
-    "<down><down><down><enter>",
+    "<down><down><down><down><down><enter>",
     # wait for the shell prompt.
     "<wait1m>",
     # do the installation.
