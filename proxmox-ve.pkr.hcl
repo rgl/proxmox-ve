@@ -133,11 +133,13 @@ source "qemu" "proxmox-ve-amd64" {
 }
 
 source "qemu" "proxmox-ve-uefi-amd64" {
-  accelerator  = "kvm"
-  machine_type = "q35"
-  efi_boot     = true
-  cpus         = var.cpus
-  memory       = var.memory
+  accelerator       = "kvm"
+  machine_type      = "q35"
+  efi_boot          = true
+  efi_firmware_code = "/usr/share/OVMF/OVMF_CODE_4M.fd"
+  efi_firmware_vars = "/usr/share/OVMF/OVMF_VARS_4M.fd"
+  cpus              = var.cpus
+  memory            = var.memory
   qemuargs = [
     ["-cpu", "host"],
   ]

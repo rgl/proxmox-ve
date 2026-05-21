@@ -101,11 +101,11 @@ variable "shell_provisioner_scripts" {
 }
 
 source "vsphere-iso" "proxmox-ve-amd64" {
-  vm_name        = "proxmox-ve-amd64"
-  guest_os_type  = "debian12_64Guest"
-  NestedHV       = true
-  CPUs           = var.cpus
-  RAM            = var.memory
+  vm_name       = "proxmox-ve-amd64"
+  guest_os_type = "debian12_64Guest"
+  NestedHV      = true
+  CPUs          = var.cpus
+  RAM           = var.memory
   storage {
     disk_size             = var.disk_size
     disk_thin_provisioned = true
