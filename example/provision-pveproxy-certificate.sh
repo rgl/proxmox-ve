@@ -39,7 +39,7 @@ if [ ! -f $domain-crt.pem ]; then
 fi
 
 # install the certificate.
-# see https://pve.proxmox.com/wiki/HTTPS_Certificate_Configuration_(Version_4.x_and_newer)
+# see https://pve.proxmox.com/wiki/HTTPS_Certificate_Configuration_(Version_4.x,_5.0_and_5.1)
 cp $domain-key.pem "/etc/pve/nodes/$dn/pveproxy-ssl.key"
 cp $domain-crt.pem "/etc/pve/nodes/$dn/pveproxy-ssl.pem"
 systemctl restart pveproxy
