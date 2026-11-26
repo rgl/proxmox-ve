@@ -2,12 +2,12 @@ packer {
   required_plugins {
     # see https://github.com/hashicorp/packer-plugin-qemu
     qemu = {
-      version = "1.1.4"
+      version = "1.1.8"
       source  = "github.com/hashicorp/qemu"
     }
     # see https://github.com/hashicorp/packer-plugin-proxmox
     proxmox = {
-      version = "1.2.3"
+      version = "1.2.4"
       source  = "github.com/hashicorp/proxmox"
     }
     # see https://github.com/hashicorp/packer-plugin-hyperv
@@ -17,7 +17,7 @@ packer {
     }
     # see https://github.com/hashicorp/packer-plugin-vagrant
     vagrant = {
-      version = "1.1.6"
+      version = "1.1.7"
       source  = "github.com/hashicorp/vagrant"
     }
   }

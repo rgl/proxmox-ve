@@ -7,10 +7,10 @@ path="$3"
 
 # see https://developer.hashicorp.com/vagrant/docs/boxes/format#box-metadata
 # see https://developer.hashicorp.com/vagrant/docs/boxes/format#box-file
-# see https://github.com/hashicorp/packer-plugin-vagrant/blob/v1.0.3/post-processor/vagrant/libvirt.go#L100-L105
-# see https://github.com/vagrant-libvirt/vagrant-libvirt/blob/0.11.2/spec/unit/action/handle_box_image_spec.rb#L96-L125
-# see https://github.com/vagrant-libvirt/vagrant-libvirt/blob/0.11.2/lib/vagrant-libvirt/action/handle_box_image.rb
-# see https://github.com/vagrant-libvirt/vagrant-libvirt/blob/0.11.2/docs/boxes.markdown
+# see https://github.com/hashicorp/packer-plugin-vagrant/blob/v1.1.7/post-processor/vagrant/libvirt.go#L105-L109
+# see https://github.com/vagrant-libvirt/vagrant-libvirt/blob/0.12.2/spec/unit/action/handle_box_image_spec.rb#L97-L127
+# see https://github.com/vagrant-libvirt/vagrant-libvirt/blob/0.12.2/lib/vagrant-libvirt/action/handle_box_image.rb
+# see https://github.com/vagrant-libvirt/vagrant-libvirt/blob/0.12.2/docs/boxes.markdown
 cat >"$path.json" <<EOF
 {
   "name": "$name",
